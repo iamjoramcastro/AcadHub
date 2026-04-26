@@ -1,0 +1,1474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#1e3a8a">
+<meta name="mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="CNHS Hub">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+<link rel="icon" type="image/png" sizes="512x512" href="icon-512.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<title>eGrado Portal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f1f5f9;--bg2:#eff6ff;--surf:#fff;--surf2:#f8fafc;
+  --tx:#0f172a;--txm:#334155;--txs:#64748b;--txd:#94a3b8;
+  --br:#bfdbfe;--brs:#e2e8f0;
+  --b:#1e3a8a;--bd:#1e293b;--bl:#2563eb;--bx:#dbeafe;
+  --am:#f97316;--aml:#fb923c;--amd:#ea580c;--amx:#ffedd5;
+  --rs:#dc2626;--rsl:#f87171;--rsx:#fee2e2;
+  --em:#059669;--eml:#34d399;--emx:#d1fae5;
+  --cy:#2563eb;
+  --r:12px;--rs2:8px;--rl:18px;
+  --ease:cubic-bezier(.22,.61,.36,1);--eout:cubic-bezier(.16,1,.3,1);
+  --ff:'Inter',system-ui,sans-serif;--fm:'JetBrains Mono',monospace;
+  --s1:0 1px 3px rgba(0,0,0,.08),0 4px 12px rgba(30,58,138,.06);
+  --s2:0 4px 16px rgba(0,0,0,.1),0 12px 32px rgba(30,58,138,.08);
+  --s3:0 8px 32px rgba(0,0,0,.12),0 24px 64px rgba(30,58,138,.1);
+}
+*{box-sizing:border-box;margin:0;padding:0}html,body{height:100%}
+body{font-family:var(--ff);color:var(--tx);background:var(--bg);-webkit-font-smoothing:antialiased;overflow-x:hidden;line-height:1.55}
+button,input,select,textarea{font-family:inherit;color:inherit}
+::-webkit-scrollbar{width:8px}::-webkit-scrollbar-thumb{background:rgba(30,58,138,.2);border-radius:8px}
+.wrap{position:relative;z-index:1}.hidden{display:none !important}
+
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:7px;
+  padding:10px 18px;font-weight:600;font-size:13px;
+  color:#fff;background:linear-gradient(180deg,var(--bl) 0%,var(--b) 100%);
+  border:none;border-radius:var(--rs2);cursor:pointer;outline:none;white-space:nowrap;flex-shrink:0;
+  transition:transform .15s var(--ease),box-shadow .2s,filter .2s;
+  box-shadow:0 1px 0 var(--bd),0 4px 10px -2px rgba(30,58,138,.35);
+}
+.btn:hover{transform:translateY(-1px);filter:brightness(1.08);box-shadow:0 2px 0 var(--bd),0 8px 18px -3px rgba(30,58,138,.4)}
+.btn:active{transform:translateY(1px);box-shadow:0 0 0 var(--bd),0 2px 4px rgba(30,58,138,.3)}
+.btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
+.btn.am{background:linear-gradient(180deg,var(--aml),var(--amd));color:#7c2d12;box-shadow:0 1px 0 var(--amd),0 4px 10px -2px rgba(249,115,22,.35)}
+.btn.ghost{background:var(--surf);color:var(--tx);border:1px solid var(--br);box-shadow:var(--s1)}
+.btn.ghost:hover{border-color:var(--bl);color:var(--b)}
+.btn.rs{background:linear-gradient(180deg,var(--rsl),var(--rs));color:#fff;box-shadow:0 1px 0 #b91c1c,0 4px 10px -2px rgba(220,38,38,.35)}
+.btn.cy{background:linear-gradient(180deg,#60a5fa,var(--cy));color:#fff;box-shadow:0 1px 0 #1e3a8a,0 4px 10px -2px rgba(8,145,178,.35)}
+.btn.sm{padding:7px 12px;font-size:12px;border-radius:6px}
+.btn.lg{padding:14px 24px;font-size:14px}
+.btn.block{width:100%}
+.icon{width:15px;height:15px;flex-shrink:0}
+
+.field{display:flex;flex-direction:column;gap:5px}
+.field label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--txs)}
+.input,.sel{width:100%;padding:10px 12px;font-size:14px;background:var(--surf);border:1.5px solid var(--brs);border-radius:var(--rs2);transition:border-color .2s,box-shadow .2s}
+.input:focus,.sel:focus{outline:none;border-color:var(--bl);box-shadow:0 0 0 3px rgba(37,99,235,.15)}
+.input.code{font-family:var(--fm);font-size:18px;letter-spacing:.2em;text-align:center;text-transform:uppercase}
+.mono{font-family:var(--fm);font-size:12px}
+
+.chip{display:inline-flex;align-items:center;gap:4px;padding:3px 9px;font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;border-radius:100px;background:var(--bx);color:var(--b);border:1px solid var(--br)}
+.chip.am{background:var(--amx);color:var(--amd);border-color:rgba(249,115,22,.3)}
+.chip.rs{background:var(--rsx);color:var(--rs);border-color:rgba(220,38,38,.25)}
+.chip.em{background:var(--emx);color:var(--em);border-color:rgba(5,150,105,.25)}
+
+.card{background:var(--surf);border:1px solid var(--brs);border-radius:var(--rl);box-shadow:var(--s1)}
+
+#splash{position:fixed;inset:0;background:var(--bg);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:20px;z-index:9999;transition:opacity .6s,visibility .6s}
+#splash.gone{opacity:0;visibility:hidden}
+.sp-logo{width:64px;height:64px;background:linear-gradient(135deg,var(--bl),var(--bd));border-radius:14px;display:grid;place-items:center;animation:spPulse 2s infinite var(--ease)}
+.sp-logo svg{width:32px;height:32px;color:#fff}
+@keyframes spPulse{0%,100%{box-shadow:0 0 0 0 rgba(37,99,235,.4)}50%{box-shadow:0 0 0 14px rgba(37,99,235,0)}}
+.sp-text{font-size:15px;font-weight:600;color:var(--txs)}
+
+#view-login{min-height:100vh;display:grid;grid-template-columns:1.1fr 1fr}
+@media(max-width:900px){#view-login{grid-template-columns:1fr}.login-art{display:none}}
+.login-art{position:relative;background:linear-gradient(135deg,var(--bd) 0%,var(--b) 50%,var(--bl) 100%);overflow:hidden;display:flex;flex-direction:column;padding:48px;color:#fff}
+.login-art::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 20% 80%,rgba(251,146,60,.2),transparent 50%),radial-gradient(circle at 85% 15%,rgba(255,255,255,.12),transparent 45%);pointer-events:none}
+.art-c{position:relative;z-index:1;flex:1;display:flex;flex-direction:column;justify-content:space-between}
+.art-brand{display:flex;align-items:center;gap:10px}
+.art-mark{width:40px;height:40px;border:1.5px solid rgba(255,255,255,.35);border-radius:10px;display:grid;place-items:center}
+.art-mark svg{width:20px;height:20px}
+.art-bt{font-size:18px;font-weight:700;letter-spacing:-.01em}.art-bt em{font-style:italic;color:var(--aml);font-weight:600}
+.art-hero{margin:auto 0}
+.art-hero h1{font-weight:300;font-size:clamp(36px,5vw,58px);line-height:1.05;letter-spacing:-.03em;margin-bottom:20px}
+.art-hero h1 em{font-style:italic;color:var(--aml);font-weight:400}
+.art-hero p{font-size:15px;color:rgba(255,255,255,.75);max-width:440px;line-height:1.6}
+.art-foot{display:flex;justify-content:space-between;font-size:11px;color:rgba(255,255,255,.5)}.art-foot b{color:var(--aml)}
+
+.login-panel{display:flex;align-items:center;justify-content:center;padding:48px 28px}
+.login-card{width:100%;max-width:420px;animation:riseIn .7s var(--eout) both}
+@keyframes riseIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
+.login-card h2{font-weight:800;font-size:34px;letter-spacing:-.03em;margin-bottom:4px;color:var(--tx)}
+.login-card h2 em{font-style:italic;color:var(--b);font-weight:700}
+.login-card .sub{color:var(--txs);margin-bottom:22px;font-size:14px}
+.role-tabs{display:flex;gap:3px;padding:3px;background:var(--bg2);border-radius:10px;margin-bottom:20px;border:1px solid var(--brs)}
+.role-tab{flex:1;padding:9px 12px;font-size:13px;font-weight:600;color:var(--txs);background:transparent;border:none;border-radius:7px;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:5px}
+.role-tab:hover{color:var(--tx)}
+.role-tab.active{color:#fff;background:linear-gradient(180deg,var(--bl),var(--b));box-shadow:0 2px 6px rgba(30,58,138,.35)}
+.role-tab svg{width:13px;height:13px}
+#login-form{display:flex;flex-direction:column;gap:14px}
+.form-foot{font-size:11px;color:var(--txs);margin-top:2px}
+#login-error{padding:9px 12px;background:var(--rsx);border:1px solid rgba(220,38,38,.3);border-radius:7px;color:var(--rs);font-size:13px}
+
+#app{min-height:100vh;display:grid;grid-template-rows:auto 1fr}
+.topbar{position:sticky;top:0;z-index:50;background:rgba(240,244,255,.88);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--brs);padding:10px 24px;display:flex;align-items:center;gap:16px}
+.brand{display:flex;align-items:center;gap:8px}
+.bm{width:32px;height:32px;background:linear-gradient(135deg,var(--bl),var(--bd));border-radius:8px;display:grid;place-items:center;color:#fff;box-shadow:0 2px 8px rgba(30,58,138,.3)}
+.bm svg{width:17px;height:17px}
+.bt{font-weight:700;font-size:16px;color:var(--tx)}.bt em{font-style:italic;color:var(--b);font-weight:600}
+.top-tabs{display:flex;gap:3px;margin-left:16px;flex-wrap:wrap}
+.top-tab{padding:7px 12px;font-size:12px;font-weight:600;color:var(--txs);background:transparent;border:none;border-radius:7px;cursor:pointer;transition:all .2s;font-family:inherit}
+.top-tab:hover{color:var(--tx);background:rgba(37,99,235,.06)}
+.top-tab.active{color:#fff;background:var(--b);box-shadow:0 2px 6px rgba(30,58,138,.3)}
+.top-right{margin-left:auto;display:flex;align-items:center;gap:12px}
+.u-chip{display:flex;align-items:center;gap:8px;padding:5px 10px 5px 5px;background:var(--surf);border:1px solid var(--brs);border-radius:100px}
+.u-av{width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,var(--bl),var(--bd));display:grid;place-items:center;color:#fff;font-weight:700;font-size:11px}
+.u-info{line-height:1.1}.u-info .name{font-size:12px;font-weight:600;color:var(--tx)}.u-info .role{font-size:9px;color:var(--txs);text-transform:uppercase;letter-spacing:.1em}
+
+.main{padding:28px 24px 70px;max-width:1400px;margin:0 auto;width:100%}
+.page{display:none;animation:pgIn .4s var(--eout) both}.page.active{display:block}
+@keyframes pgIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.page-head{margin-bottom:28px}.page-head .ey{font-size:10px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--bl);margin-bottom:6px}
+.page-head h1{font-weight:800;font-size:clamp(28px,4vw,42px);line-height:1.1;letter-spacing:-.03em;color:var(--tx)}
+.page-head h1 em{font-style:italic;color:var(--b);font-weight:700}
+.page-head .desc{margin-top:6px;color:var(--txs);max-width:600px;font-size:14px}
+
+.sg{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-bottom:28px}
+.st{padding:18px;background:var(--surf);border:1px solid var(--brs);border-radius:var(--r);position:relative;overflow:hidden;transition:transform .3s var(--ease),box-shadow .3s}
+.st:hover{transform:translateY(-2px);box-shadow:var(--s2)}
+.st::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--bl),var(--b))}
+.st .lb{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--txs)}
+.st .vl{font-weight:800;font-size:36px;line-height:1;color:var(--b);margin-top:6px}
+.st .sb{margin-top:4px;font-size:11px;color:var(--txs)}
+.st.am::before{background:linear-gradient(90deg,var(--amd),var(--am))}.st.rs::before{background:linear-gradient(90deg,var(--rs),var(--rsl))}.st.cy::before{background:linear-gradient(90deg,var(--cy),#60a5fa)}
+
+.sh{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid var(--brs);gap:10px;flex-wrap:wrap}
+.sh h2{font-weight:700;font-size:20px;color:var(--tx)}.sh h2 em{font-style:italic;color:var(--b);font-weight:600}
+.sh-a{display:flex;gap:6px;flex-wrap:wrap}
+
+.tw{background:var(--surf);border:1px solid var(--brs);border-radius:var(--r);overflow:auto;box-shadow:var(--s1)}
+table{width:100%;border-collapse:collapse;font-size:13px}
+thead th{position:sticky;top:0;background:linear-gradient(180deg,var(--bg2),var(--brs));text-align:left;padding:10px 12px;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--txm);border-bottom:1px solid var(--br);white-space:nowrap}
+tbody td{padding:10px 12px;border-bottom:1px solid var(--brs);vertical-align:middle;color:var(--tx)}
+tbody tr{transition:background .2s}tbody tr:hover{background:rgba(37,99,235,.04)}tbody tr:last-child td{border-bottom:none}
+
+.modal-back{position:fixed;inset:0;background:rgba(15,23,42,.45);backdrop-filter:blur(6px);display:none;align-items:center;justify-content:center;z-index:200;padding:20px}
+.modal-back.show{display:flex}
+.modal{width:100%;max-width:520px;background:var(--surf);border-radius:var(--rl);border:1px solid var(--brs);box-shadow:var(--s3);overflow:hidden;animation:mPop .35s var(--eout);max-height:90vh;display:flex;flex-direction:column}
+@keyframes mPop{from{opacity:0;transform:translateY(16px) scale(.97)}to{opacity:1;transform:none}}
+.modal.wide{max-width:760px}
+.m-head{padding:16px 20px 14px;border-bottom:1px solid var(--brs);display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.m-head h3{font-weight:700;font-size:18px;color:var(--tx)}.m-head h3 em{font-style:italic;color:var(--b)}
+.m-body{padding:20px;overflow-y:auto}
+.m-foot{padding:12px 20px;border-top:1px solid var(--brs);display:flex;justify-content:flex-end;gap:6px;background:var(--bg);flex-shrink:0;flex-wrap:wrap}
+.x-btn{width:28px;height:28px;border:1px solid var(--brs);background:var(--surf);border-radius:6px;display:grid;place-items:center;cursor:pointer;transition:all .2s;color:var(--txs)}
+.x-btn:hover{background:var(--rsx);color:var(--rs);border-color:rgba(220,38,38,.3)}
+
+#toast-layer{position:fixed;bottom:20px;right:20px;z-index:500;display:flex;flex-direction:column;gap:8px;max-width:340px}
+.toast{padding:12px 16px;background:var(--tx);color:#fff;border-radius:10px;box-shadow:var(--s3);font-size:13px;animation:tIn .35s var(--eout),tOut .35s ease 3.4s forwards;display:flex;gap:8px;border-left:3px solid var(--bl)}
+.toast.ok{border-left-color:var(--em)}.toast.err{border-left-color:var(--rs)}
+@keyframes tIn{from{transform:translateX(16px);opacity:0}to{transform:none;opacity:1}}
+@keyframes tOut{to{transform:translateX(16px);opacity:0}}
+
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:640px){.grid-2{grid-template-columns:1fr}}
+
+.ct{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px}
+.ct-card{padding:18px;background:var(--surf);border:1px solid var(--brs);border-radius:var(--r);cursor:pointer;transition:transform .3s var(--ease),box-shadow .3s,border-color .3s;position:relative;overflow:hidden;text-align:left;width:100%;font-family:inherit;color:inherit;border-left:4px solid var(--bl)}
+.ct-card:hover{transform:translateY(-3px);box-shadow:var(--s2);border-color:var(--b)}
+.ct-top{display:flex;gap:5px;align-items:center;margin-bottom:10px;flex-wrap:wrap}
+.ct-name{font-weight:700;font-size:18px;color:var(--tx);margin-bottom:2px}
+.ct-meta{color:var(--txs);font-size:12px}
+.ct-foot{margin-top:14px;display:flex;justify-content:space-between;align-items:flex-end;font-size:11px;color:var(--txs)}
+.ct-cta{color:var(--b);font-weight:700;font-size:11px;letter-spacing:.06em;text-transform:uppercase;display:flex;align-items:center;gap:3px}
+
+.gh{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:14px;padding:18px 20px;background:linear-gradient(135deg,var(--bd),var(--b));color:#fff;border-radius:var(--rl) var(--rl) 0 0;border:1px solid var(--bd);border-bottom:none;position:relative;overflow:hidden}
+.gh::before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 80% 50%,rgba(251,146,60,.15),transparent 60%);pointer-events:none}
+.gh-t{font-weight:700;font-size:22px;position:relative}.gh-t em{font-style:italic;color:var(--aml)}
+.gh-s{font-size:12px;color:rgba(255,255,255,.75);margin-top:3px;position:relative}
+
+.qt{display:flex;gap:2px;padding:3px;background:var(--bg2);border-radius:10px;margin:14px 0;border:1px solid var(--brs);width:fit-content;max-width:100%;overflow-x:auto}
+.q-tab{padding:8px 14px;font-size:12px;font-weight:600;color:var(--txs);background:transparent;border:none;border-radius:7px;cursor:pointer;transition:all .2s;font-family:inherit;white-space:nowrap}
+.q-tab:hover{color:var(--tx)}.q-tab.active{color:#fff;background:var(--b);box-shadow:0 2px 6px rgba(30,58,138,.3)}
+
+.gt{background:var(--surf);border:1px solid var(--brs);border-top:none;border-radius:0 0 var(--rl) var(--rl);overflow:hidden}
+.gt table{width:100%}
+.gt th{padding:12px 14px;background:var(--bg2);font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--txm);text-align:left;border-bottom:1px solid var(--br)}
+.gt-twin th{padding:6px 8px;font-size:9.5px;text-align:center}
+.gt-twin th.sub-h{background:#fff7ed;color:#7c2d12;border-bottom:2px solid #fed7aa;font-size:9px;letter-spacing:.06em}
+.gt-twin th.sub-h.fin-h{background:#fef3c7;color:#78350f;border-bottom:2px solid #fbbf24;font-weight:800}
+.gt-twin td.cell-init{text-align:center;border-right:1px dashed #e5e7eb;padding:6px 4px;background:#fffaf3}
+.gt-twin td.cell-init .grade-pill{padding:5px 8px;font-size:12.5px;min-width:48px}
+.gt-twin td.cell-final{text-align:center;padding:6px 8px;background:#fffbeb;font-size:14px;font-weight:800;color:#78350f;border-right:2px solid var(--bg2)}
+.gt-twin td.cell-final.g-h{background:#ecfdf5;color:#065f46}
+.gt-twin td.cell-final.g-m{background:#fffbeb;color:#92400e}
+.gt-twin td.cell-final.g-l{background:#fef2f2;color:#991b1b}
+.mode-pill{display:block;margin-top:4px;font-size:9px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;padding:3px 8px;border-radius:999px;background:linear-gradient(135deg,#fbbf24,#f59e0b);color:#78350f;border:1px solid #f59e0b;text-align:center}
+.gt td{padding:9px 14px;border-bottom:1px solid var(--brs);vertical-align:middle;color:var(--tx)}
+.gt tr:last-child td{border-bottom:none}.gt tr:hover{background:rgba(37,99,235,.03)}
+.gi{width:70px;padding:7px 6px;font-family:var(--fm);font-size:13px;text-align:center;background:var(--surf);border:1.5px solid var(--brs);border-radius:6px;transition:all .2s;color:var(--tx)}
+.gi:focus{outline:none;border-color:var(--bl);box-shadow:0 0 0 3px rgba(37,99,235,.12)}
+.gi.saved{animation:giOk .7s var(--eout)}
+@keyframes giOk{0%{background:#d1fae5;border-color:var(--em)}100%{background:var(--surf);border-color:var(--brs)}}
+.gi.invalid{border-color:var(--rs);background:var(--rsx)}
+.gi.mapeh-auto{background:var(--bx);border-color:var(--br);color:var(--b);font-weight:600;cursor:not-allowed}
+.sn{font-weight:600;color:var(--tx)}.sn .sm{font-size:11px;color:var(--txs);font-family:var(--fm);display:block;margin-top:1px}
+
+.ab{display:inline-flex;align-items:center;justify-content:center;min-width:48px;padding:3px 9px;background:linear-gradient(135deg,var(--bl),var(--bd));color:#fff;font-family:var(--fm);font-size:12px;font-weight:600;border-radius:100px}
+.ab.low{background:linear-gradient(135deg,var(--rsl),var(--rs))}.ab.mid{background:linear-gradient(135deg,var(--aml),var(--amd));color:#7c2d12}
+
+.fb-i{width:26px;height:26px;display:grid;place-items:center;border:1px solid var(--brs);background:var(--surf);border-radius:6px;cursor:pointer;color:var(--txs);transition:all .2s;position:relative}
+.fb-i:hover{color:var(--b);border-color:var(--bl)}.fb-i.has{color:var(--amd);border-color:var(--am);background:var(--amx)}
+.fb-i svg{width:12px;height:12px}
+
+.gc{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px}
+.g-card{padding:18px;background:var(--surf);border:1px solid var(--brs);border-radius:var(--rl);position:relative;overflow:hidden;transition:transform .3s var(--ease),box-shadow .3s}
+.g-card:hover{transform:translateY(-3px);box-shadow:var(--s2)}
+.g-card::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--bl),var(--am))}
+.g-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px;gap:10px}
+.g-name{font-weight:700;font-size:17px;color:var(--tx)}
+.g-final{font-weight:800;font-size:34px;line-height:1;color:var(--b)}.g-final.low{color:var(--rs)}.g-final.mid{color:var(--amd)}
+.g-qs{display:grid;gap:6px}
+.gq{padding:8px 4px;background:var(--bg);border-radius:6px;text-align:center}
+.gq .lb{font-size:9px;font-weight:700;letter-spacing:.1em;color:var(--txs);text-transform:uppercase}
+.gq .v{font-family:var(--fm);font-size:14px;font-weight:600;color:var(--tx);margin-top:1px}.gq .v.e{color:var(--txd)}
+.g-foot{margin-top:12px;padding-top:10px;border-top:1px solid var(--brs);font-size:11px;color:var(--txs);display:flex;justify-content:space-between}
+
+.fb-list{margin-top:8px}.fb-e{padding:8px 10px;background:var(--bg);border-left:3px solid var(--am);border-radius:5px;margin-bottom:5px;font-size:12px;line-height:1.5;color:var(--tx)}
+.fb-e .fq{font-weight:700;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--amd);display:block;margin-bottom:1px}
+
+.disc{position:relative;padding:18px 20px;border-radius:var(--rl);background:var(--bx);border:1.5px solid var(--br);margin-bottom:24px;animation:discIn .7s var(--eout) both}
+@keyframes discIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.disc-hd{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.disc-ic{width:34px;height:34px;border-radius:8px;background:linear-gradient(135deg,var(--bl),var(--bd));display:grid;place-items:center;color:#fff;flex-shrink:0}
+.disc-ic svg{width:17px;height:17px}
+.disc-ti{font-weight:700;font-size:13px;letter-spacing:.02em;color:var(--bd);text-transform:uppercase}
+.disc-bd{font-size:12px;line-height:1.6;color:var(--txm)}.disc-bd strong{color:var(--tx);font-weight:700}
+.disc-ft{margin-top:8px;padding-top:8px;border-top:1px solid var(--br);font-size:10px;color:var(--txs);display:flex;align-items:center;gap:5px}
+.disc-ft svg{width:11px;height:11px;flex-shrink:0}
+
+.empty{padding:50px 18px;text-align:center;background:var(--surf);border:1px dashed var(--br);border-radius:var(--r)}
+
+.flip-wrap{perspective:1000px;width:100%}
+.flip-inner{position:relative;width:100%;transition:transform .6s var(--ease);transform-style:preserve-3d}
+.flip-inner.flipped{animation:flipOnce .7s var(--ease) forwards}
+@keyframes flipOnce{0%{transform:rotateY(0)}100%{transform:rotateY(180deg)}}
+.flip-front,.flip-back{backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:var(--rl)}
+.flip-front{position:relative}
+.flip-back{position:absolute;inset:0;transform:rotateY(180deg);background:var(--surf);border:1px solid var(--brs);border-radius:var(--rl);padding:18px;overflow-y:auto;display:flex;flex-direction:column}
+.flip-back .fb-title{font-weight:700;font-size:13px;color:var(--b);margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.flip-back .fb-title svg{width:14px;height:14px}
+.g-card.has-fb{cursor:pointer}.g-card.has-fb::after{content:"";position:absolute;top:10px;right:10px;width:8px;height:8px;border-radius:50%;background:var(--am);border:2px solid var(--surf);z-index:1}
+.g-card.showing-back .flip-inner{transform:rotateY(180deg)}
+
+.mc-row{display:flex;align-items:center;gap:6px;padding:8px 10px;background:var(--bg);border-radius:6px;margin-bottom:5px;flex-wrap:wrap}
+.mc-label{font-size:10px;font-weight:700;color:var(--txs);text-transform:uppercase;letter-spacing:.06em;min-width:48px;flex-shrink:0}
+.mc-grades{display:flex;gap:4px;flex-wrap:wrap;flex:1}
+.mc-qv{font-family:var(--fm);font-size:11px;color:var(--tx);white-space:nowrap}
+.mc-qv .ql{font-size:9px;font-weight:700;color:var(--txs)}
+.mc-qv.e{color:var(--txd)}
+.mc-ave{font-family:var(--fm);font-size:11px;font-weight:700;color:var(--b);white-space:nowrap;margin-left:auto;flex-shrink:0}
+.empty svg{width:40px;height:40px;color:var(--txd);margin-bottom:10px}
+.empty h3{font-weight:700;font-size:18px;color:var(--tx);margin-bottom:4px}
+.empty p{color:var(--txs);max-width:380px;margin:0 auto 12px;font-size:13px}
+
+.reveal{opacity:0;transform:translateY(12px);transition:opacity .5s var(--eout),transform .5s var(--eout)}.reveal.in{opacity:1;transform:none}
+.spinner{display:inline-block;width:13px;height:13px;border:2px solid currentColor;border-right-color:transparent;border-radius:50%;animation:spin .6s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+.filter-bar{display:flex;flex-wrap:wrap;gap:8px;padding:12px 14px;background:var(--surf);border:1px solid var(--brs);border-radius:10px;margin-bottom:14px;align-items:center}
+.filter-bar .fl{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--txs)}
+.filter-bar select,.filter-bar input{padding:6px 10px;background:var(--surf);border:1px solid var(--brs);border-radius:6px;font-size:12px}
+
+.ia{width:26px;height:26px;display:grid;place-items:center;border:1px solid var(--brs);background:var(--surf);border-radius:5px;cursor:pointer;color:var(--txs);transition:all .2s}
+.ia:hover{color:var(--b);border-color:var(--bl)}.ia.del:hover{color:var(--rs);border-color:var(--rs)}.ia svg{width:13px;height:13px}
+
+.qv-row{display:flex;flex-wrap:wrap;gap:6px;padding:10px 14px;border-bottom:1px solid var(--brs);align-items:center}
+.qv-row:last-child{border-bottom:none}
+.qv-subj{flex:1;min-width:100px;font-weight:600;font-size:13px;color:var(--tx)}
+.qv-grade{font-family:var(--fm);font-size:13px;font-weight:600;min-width:42px;text-align:center;color:var(--tx)}.qv-grade.e{color:var(--txd)}
+.qv-teacher{font-size:10px;color:var(--txs);width:100%}
+@media(min-width:640px){.qv-teacher{width:auto;flex-shrink:0}}
+
+.share-card{padding:14px 16px;background:var(--surf);border:1px solid var(--brs);border-radius:var(--r);margin-bottom:10px;border-left:4px solid var(--cy)}
+.share-card .sc-top{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;flex-wrap:wrap}
+.share-card .sc-name{font-weight:700;font-size:15px;color:var(--tx)}
+.share-card .sc-meta{color:var(--txs);font-size:11px;margin-top:2px}
+
+@media(max-width:700px){
+  .topbar{padding:8px 12px;gap:8px;flex-wrap:wrap}
+  .top-tabs{order:3;width:100%;margin-left:0;overflow-x:auto}
+  .main{padding:18px 12px 50px}
+  .u-info{display:none}
+  .page-head h1{font-size:26px}
+  .gh{padding:14px 16px;border-radius:var(--r) var(--r) 0 0}
+  .gh-t{font-size:18px}
+  .gi{width:54px;padding:5px 3px;font-size:12px}
+  .gt th,.gt td{padding:7px 6px;font-size:11px}
+  .gt th{font-size:8px;letter-spacing:.06em}
+  .st .vl{font-size:28px}
+  .sg{grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px}.st{padding:12px}
+  .gc{grid-template-columns:1fr}.ct{grid-template-columns:1fr}
+  .g-final{font-size:28px}.g-name{font-size:15px}
+  .gt{border-radius:0 0 var(--r) var(--r)}
+  .fb-i{width:24px;height:24px}
+  .btn.sm{padding:5px 8px;font-size:11px}
+}
+.honor-badge{display:inline-flex;align-items:center;gap:5px;padding:3px 9px;border-radius:999px;font-size:11px;font-weight:800;letter-spacing:.01em;line-height:1.2;white-space:nowrap;background:linear-gradient(135deg,#d1fae5,#a7f3d0);color:#065f46;border:1px solid #6ee7b7;box-shadow:0 2px 6px -2px rgba(5,150,105,.35)}
+.honor-badge.high{background:linear-gradient(135deg,#dbeafe,#93c5fd);color:#1e3a8a;border-color:#60a5fa;box-shadow:0 2px 6px -2px rgba(37,99,235,.4)}
+.honor-badge.highest{background:linear-gradient(135deg,#fed7aa,#fdba74);color:#7c2d12;border-color:#fb923c;box-shadow:0 2px 8px -2px rgba(249,115,22,.55);animation:honorPulse 2.2s ease-in-out infinite}
+.honor-badge svg{width:11px;height:11px;flex-shrink:0}
+.honor-badge.mini{padding:1px 5px;font-size:9px;gap:3px}
+.honor-badge.mini svg{width:8px;height:8px}
+@keyframes honorPulse{0%,100%{box-shadow:0 2px 8px -2px rgba(249,115,22,.55)}50%{box-shadow:0 4px 14px -2px rgba(249,115,22,.85)}}
+.grade-pill{display:inline-flex;align-items:center;justify-content:center;padding:8px 14px;border-radius:10px;font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:700;background:var(--bg);border:1.5px solid var(--br);color:var(--tx);cursor:pointer;transition:all .2s var(--ease);min-width:64px}
+.grade-pill:hover{border-color:var(--am);background:var(--amx);color:var(--amd);transform:translateY(-1px);box-shadow:0 4px 12px -4px rgba(249,115,22,.3)}
+.grade-pill.empty{color:var(--txs);border-style:dashed}
+.grade-pill.disabled{cursor:default;opacity:.55}
+.grade-pill.disabled:hover{border-color:var(--br);background:var(--bg);color:var(--tx);transform:none;box-shadow:none}
+.comp-sec{margin-bottom:14px;padding:12px 14px;border:1px solid var(--br);border-radius:10px;background:var(--bg)}
+.comp-hd{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:10px}
+.comp-ti{font-weight:700;font-size:13px;color:var(--tx);display:flex;align-items:center;gap:7px}
+.comp-ti::before{content:"";width:4px;height:14px;border-radius:3px;background:var(--am)}
+.comp-row{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.comp-row .input{flex:1;padding:9px 10px;font-size:13px}
+.comp-row .btn{flex-shrink:0;padding:7px 11px;font-size:13px;min-width:34px}
+.comp-sum{padding:14px 16px;border-radius:10px;background:linear-gradient(135deg,var(--amx),#fff7ed);border:1px solid rgba(249,115,22,.25);margin-top:10px}
+.comp-row-sum{display:flex;justify-content:space-between;align-items:center;padding:6px 0;font-size:13px;color:var(--txs)}
+.comp-row-sum.fin{border-top:1.5px dashed rgba(249,115,22,.4);padding-top:10px;margin-top:6px;color:var(--tx);font-weight:700;font-size:14px}
+.tk-src{display:inline-flex;align-items:center;gap:4px;padding:2px 8px;font-size:10px;font-weight:700;border-radius:999px;background:linear-gradient(135deg,#059669,#047857);color:#fff;letter-spacing:.03em;text-transform:uppercase;margin-left:6px;box-shadow:0 2px 6px -2px rgba(5,150,105,.4)}
+.tk-src svg{width:10px;height:10px;stroke-width:3}
+.tk-src.manual{background:linear-gradient(135deg,#1e3a8a,#1e40af);box-shadow:0 2px 6px -2px rgba(30,58,138,.4)}
+.auto-badge{display:inline-flex;align-items:center;gap:4px;padding:2px 8px;font-size:10px;font-weight:700;border-radius:999px;background:linear-gradient(135deg,#f97316,#ea580c);color:#fff;letter-spacing:.03em;text-transform:uppercase;margin-left:6px;box-shadow:0 2px 6px -2px rgba(249,115,22,.4)}
+.auto-badge svg{width:10px;height:10px;stroke-width:3}
+.tk-row{background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px;padding:8px 10px}
+.tk-row.pending{background:#fff1f2;border-color:#fecaca}
+.w-pill{display:inline-flex;align-items:center;gap:4px;padding:3px 9px;font-size:10.5px;font-weight:700;border-radius:999px;background:var(--bx);color:var(--b);border:1px solid var(--br);letter-spacing:.02em;text-transform:uppercase}
+.w-pill.missing{background:#fee2e2;color:#991b1b;border-color:#fecaca}
+.w-pill.missing::before{content:"⚠";font-weight:900}
+</style>
+</head>
+<body>
+<div id="splash"><div class="sp-logo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/><path d="m9 8 2 2 4-4" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="sp-text">Loading eGrado Portal…</div></div>
+
+<div id="view-login" class="wrap hidden">
+  <aside class="login-art"><div class="art-c"><div class="art-brand"><div class="art-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div><div class="art-bt">e<em>Grado</em> Portal</div></div><div class="art-hero"><h1>Quarterly <em>grades</em>, simplified.</h1><p>eGrado Portal - Grade Management.</p></div><div class="art-foot"><div>CNHS · DepEd Region XI</div><div><b id="login-sy">S.Y. ——</b></div></div></div></aside>
+  <section class="login-panel"><div class="login-card"><h2>Welcome <em>back.</em></h2><p class="sub">Sign in to view or manage grades.</p><div class="role-tabs" id="role-tabs"><button class="role-tab active" data-role="student"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c0 2 4 3 6 3s6-1 6-3v-5"/></svg>Student</button><button class="role-tab" data-role="staff"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="7" r="4"/><path d="M5.5 21a6.5 6.5 0 0 1 13 0"/></svg>Teacher / Admin</button></div><form id="login-form" autocomplete="on"><div id="student-fields"><div class="field"><label>Access Code</label><input id="student-code" class="input code" type="text" placeholder="ABCD1234XY" maxlength="20" autocomplete="off"></div><p class="form-foot">Your access code is issued by your adviser.</p></div><div id="staff-fields" class="hidden"><div class="field"><label>Email</label><input id="staff-email" class="input" type="email" placeholder="name@deped.gov.ph" autocomplete="email"></div><div class="field"><label>Password</label><input id="staff-pass" class="input" type="password" placeholder="••••••••" autocomplete="current-password"></div><p class="form-foot">Same credentials as CNHS Attendance Tracker.</p></div><div id="login-error" class="hidden"></div><button type="submit" class="btn lg block" id="login-btn"><span id="login-btn-text">Continue</span></button><div style="margin-top:16px;text-align:center"><a href="index.html" style="display:inline-flex;align-items:center;gap:6px;color:var(--b);text-decoration:none;font-size:12px;font-weight:600;padding:7px 14px;border-radius:8px;background:var(--bx);border:1px solid var(--br);transition:all .2s"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>Back to CNHS Hub</a></div></form></div></section>
+</div>
+
+<div id="app" class="wrap hidden">
+  <header class="topbar"><div class="brand"><div class="bm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/><path d="m9 8 2 2 4-4" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="bt">e<em>Grado</em> Portal</div></div><nav class="top-tabs" id="tabs"></nav><div class="top-right"><a class="btn ghost sm" href="index.html" title="Back to CNHS Hub" style="text-decoration:none"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>Hub</a><div class="u-chip"><div class="u-av" id="avatar">—</div><div class="u-info"><span class="name" id="u-name">—</span><span class="role" id="u-role">—</span></div></div><button class="btn ghost sm" id="logout-btn"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" x2="9" y1="12" y2="12"/></svg>Sign out</button></div></header>
+  <main class="main"><div id="pages"></div></main>
+</div>
+
+<div class="modal-back" id="modal-back"><div class="modal" id="modal"><div class="m-head"><h3 id="modal-title"></h3><button class="x-btn" id="modal-close"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg></button></div><div class="m-body" id="modal-body"></div><div class="m-foot" id="modal-foot"></div></div></div>
+<div id="toast-layer"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+<script type="module">
+import{initializeApp}from"https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import{getAuth,signInWithEmailAndPassword,signInAnonymously,onAuthStateChanged,signOut}from"https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import{getDatabase,ref,get,set,update,push,onValue,remove}from"https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+const SRC_CFG={apiKey:"AIzaSyDZwuixyWCBAzf5gZkSiovNnhCstDkvh4I",authDomain:"cogonnhsattendancetracker.firebaseapp.com",databaseURL:"https://cogonnhsattendancetracker-default-rtdb.firebaseio.com",projectId:"cogonnhsattendancetracker",storageBucket:"cogonnhsattendancetracker.firebasestorage.app",messagingSenderId:"700261459666",appId:"1:700261459666:web:7d5b7b0f6d86a6cebdaf0b"};
+const GR_CFG={apiKey:"AIzaSyAF2BcT2Y6JFs__iPMWEtBkl40cJM9ARZM",authDomain:"egradomo.firebaseapp.com",databaseURL:"https://egradomo-default-rtdb.firebaseio.com",projectId:"egradomo",storageBucket:"egradomo.firebasestorage.app",messagingSenderId:"64301997255",appId:"1:64301997255:web:f981c2b706f2370cc3b2e2"};
+const TK_CFG={apiKey:"AIzaSyDiJaTgaBzJ_Lig-ziiEV4m2j0WpIYomKY",authDomain:"ultimatetaskhub.firebaseapp.com",databaseURL:"https://ultimatetaskhub-default-rtdb.firebaseio.com",projectId:"ultimatetaskhub",storageBucket:"ultimatetaskhub.firebasestorage.app",messagingSenderId:"988510035877",appId:"1:988510035877:web:94afd5a77ecf238e65524c"};
+const ADMIN_UID="Q6omNcMzavfB9LHOc9UACLb1llp2";
+const srcApp=initializeApp(SRC_CFG,"src"),grApp=initializeApp(GR_CFG,"gr"),tkApp=initializeApp(TK_CFG,"tk");
+const srcAuth=getAuth(srcApp),grAuth=getAuth(grApp),tkAuth=getAuth(tkApp),srcDb=getDatabase(srcApp),grDb=getDatabase(grApp),tkDb=getDatabase(tkApp);
+signInAnonymously(grAuth).catch(()=>{});
+signInAnonymously(tkAuth).catch(()=>{});
+
+if('serviceWorker' in navigator){window.addEventListener('load',()=>{navigator.serviceWorker.register('sw.js').catch(()=>{});});}
+
+function _getHubSession(){try{const r=localStorage.getItem('cnhsHubSession');return r?JSON.parse(r):null;}catch(e){return null;}}
+function _clearHubSession(){try{localStorage.removeItem('cnhsHubSession');}catch(e){}}
+window.addEventListener('DOMContentLoaded',()=>{
+  const s=_getHubSession();
+  if(s&&s.role==='student'&&s.code){
+    const tabs=document.querySelectorAll('.role-tab');tabs.forEach(t=>t.classList.remove('active'));
+    const st=document.querySelector('.role-tab[data-role="student"]');if(st){st.classList.add('active');}
+    const sf=document.getElementById('student-fields');if(sf) sf.classList.remove('hidden');
+    const xf=document.getElementById('staff-fields');if(xf) xf.classList.add('hidden');
+    const inp=document.getElementById('student-code');
+    if(inp){inp.value=s.code;setTimeout(()=>{const f=document.getElementById('login-form');if(f) f.dispatchEvent(new Event('submit',{cancelable:true,bubbles:true}));},350);}
+  }
+  const lb=document.getElementById('logout-btn');
+  if(lb){lb.addEventListener('click',()=>{_clearHubSession();setTimeout(()=>{location.href='index.html';},320);});}
+});
+
+const S={user:null,roleMode:"student",classes:{},students:{},teachers:{},settings:{},grades:{},classConfig:{},shared:{},signatories:{},tkActs:{},tkQzs:{},tkSubs:{},tkQzScores:{},currentPage:null,currentClassId:null,currentQuarter:1};
+
+const DEPED_JHS_ORDER=["Filipino","English","Mathematics","Science","Araling Panlipunan","AP","Edukasyon sa Pagpapakatao","ESP","Technology and Livelihood Education","TLE","MAPEH","Music","Arts","Physical Education","PE","Health"];
+function depedSort(a,b){
+  const sa=(a.data||a).subject||"";const sb=(b.data||b).subject||"";
+  const ia=DEPED_JHS_ORDER.findIndex(x=>sa.toLowerCase().includes(x.toLowerCase()));
+  const ib=DEPED_JHS_ORDER.findIndex(x=>sb.toLowerCase().includes(x.toLowerCase()));
+  const pa=ia>=0?ia:999;const pb=ib>=0?ib:999;
+  if(pa!==pb)return pa-pb;return sa.localeCompare(sb);
+}
+
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const el=(tag,p={},...k)=>{const e=document.createElement(tag);for(const[a,v]of Object.entries(p)){if(a==="class")e.className=v;else if(a==="html")e.innerHTML=v;else if(a.startsWith("on")&&typeof v==="function")e.addEventListener(a.slice(2),v);else if(v!=null)e.setAttribute(a,v)}for(const c of k.flat()){if(c==null)continue;e.appendChild(typeof c==="string"?document.createTextNode(c):c)}return e};
+const esc=s=>String(s==null?"":s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+
+function toast(m,k=""){const t=el("div",{class:`toast ${k}`});t.innerHTML=`<span>${m}</span>`;$("#toast-layer").appendChild(t);setTimeout(()=>t.remove(),4000)}
+function modal({title,body,actions=[],wide=false}){$("#modal").classList.toggle("wide",!!wide);$("#modal-title").innerHTML=title;const b=$("#modal-body");b.innerHTML="";if(typeof body==="string")b.innerHTML=body;else if(body instanceof Node)b.appendChild(body);const f=$("#modal-foot");f.innerHTML="";actions.forEach(a=>{const b2=el("button",{class:`btn ${a.class||"ghost"} sm`});b2.textContent=a.label;b2.addEventListener("click",()=>a.onClick&&a.onClick());f.appendChild(b2)});$("#modal-back").classList.add("show");$("#modal-close").onclick=closeModal}
+function closeModal(){$("#modal-back").classList.remove("show")}
+$("#modal-back").addEventListener("click",e=>{if(e.target.id==="modal-back")closeModal()});
+
+function gL(v){if(!v)return"?";return String(v).replace(/^grade\s*/i,"").trim()||"?"}
+function qKeys(cid){const n=qCount(cid);return Array.from({length:n},(_,i)=>"q"+(i+1))}
+function qCount(cid){const cfg=(S.classConfig||{})[cid];return cfg?.quarterCount||4}
+function qLabel(qk,cnt){const i=parseInt(qk.slice(1));if(cnt===2)return"Sem "+i;if(cnt===3)return"Tri "+i;return"Q"+i}
+function setQCount(cid,n){return update(ref(grDb,`classConfig/${cid}`),{quarterCount:n})}
+function cT(c){return c.teacherUid||c.teacherId||c.teacher_uid||c.teacher||""}
+function aSY(){const s=S.settings||{};const raw=s.activeSchoolYear??s.currentSchoolYear??s.schoolYear??s.activeSY??null;return xSY(raw)}
+function xSY(v){if(!v)return null;if(typeof v==="string")return v;if(typeof v==="number")return String(v);if(typeof v==="object"){for(const k of["value","year","schoolYear","activeSchoolYear","currentSchoolYear","label","name","sy"]){if(v[k]&&typeof v[k]==="string")return v[k];if(v[k]&&typeof v[k]==="number")return String(v[k])}if(v.start&&v.end)return`${v.start}-${v.end}`;for(const val of Object.values(v)){if(typeof val==="string"&&val.includes("-"))return val}}return null}
+function iSY(c){const sy=aSY();if(!sy)return true;return!c.schoolYear||c.schoolYear===sy}
+function isDrop(s){if(!s)return false;if(s.dropped===true||s.isDropped===true||s.transferred===true)return true;const st=String(s.status||s.enrollmentStatus||"").toLowerCase();return["dropped","drop","dropout","transferred","inactive","removed"].includes(st)}
+function fA(r,keys){if(!r)return null;const ks=keys||["q1","q2","q3","q4"];const vs=ks.map(q=>(r[q]!=null&&r[q]!==""?+r[q]:null)).filter(x=>x!=null&&!isNaN(x));if(!vs.length)return null;return vs.reduce((a,b)=>a+b,0)/vs.length}
+function abH(v){return`<span class="ab ${v>=90?"":v>=75?"mid":"low"}">${v.toFixed(2)}</span>`}
+function rF(r,keys){const v=fA(r,keys);return v==null?'<span style="color:var(--txd)">—</span>':abH(v)}
+function _sexRank(s){const x=((s&&s.sex)||'').toString().trim().toLowerCase();if(x==='m'||x==='male')return 0;if(x==='f'||x==='female')return 1;return 2}
+function _sortRoster(a,b){const sa=_sexRank(a[1]),sb=_sexRank(b[1]);if(sa!==sb)return sa-sb;return(a[1].name||"").localeCompare(b[1].name||"",undefined,{sensitivity:'base'})}
+function gCS(cid){const c=(S.classes||{})[cid]||{};const lookupCid=c.mapehParentId||cid;return Object.entries(S.students).filter(([,s])=>s.classId===lookupCid&&!isDrop(s)).sort(_sortRoster)}
+function _rosterCid(cid){const c=(S.classes||{})[cid]||{};return c.mapehParentId||cid}
+function fN(f){if(!f)return"there";if(f.includes(","))return f.split(",")[1].trim().split(" ")[0]||f;return f.split(" ")[0]}
+
+const MAPEH_COMPS=["music","arts","pe","health"];
+const MAPEH_LABELS={music:"Music",arts:"Arts",pe:"PE",health:"Health"};
+function isMAPEHClass(subject){return(subject||"").toLowerCase().includes("mapeh")&&!isMAPEHComp(subject)}
+function isMAPEHComp(subject){const s=(subject||"").toLowerCase().trim();return["music","arts","art","pe","physical education","health"].some(k=>s===k||s.startsWith(k+" ")||s.endsWith(" "+k))}
+function mapehCompKey(comp,qk){return comp+"_"+qk}
+function calcMAPEHFromClass(cid,studentCode,qk){
+  const r=((S.grades||{})[cid]||{})[studentCode]||{};
+  const vals=[];
+  for(const comp of MAPEH_COMPS){const k=mapehCompKey(comp,qk);if(r[k]==null||r[k]==="")return null;vals.push(+r[k])}
+  return vals.reduce((a,b)=>a+b,0)/4;
+}
+function autoSaveMAPEHAvg(cid,studentCode,qk){
+  const avg=calcMAPEHFromClass(cid,studentCode,qk);
+  if(avg!=null)update(ref(grDb,`grades/${cid}/${studentCode}`),{[qk]:+(avg).toFixed(2)});
+  else update(ref(grDb,`grades/${cid}/${studentCode}`),{[qk]:null});
+}
+
+async function wA(action,data){try{await push(ref(grDb,"audit"),{action,...data,by:S.user.uid||"",byName:S.user.name||"",at:Date.now()})}catch(e){}}
+
+$$("#role-tabs .role-tab").forEach(t=>{t.addEventListener("click",()=>{$$("#role-tabs .role-tab").forEach(x=>x.classList.remove("active"));t.classList.add("active");S.roleMode=t.dataset.role;$("#student-fields").classList.toggle("hidden",S.roleMode!=="student");$("#staff-fields").classList.toggle("hidden",S.roleMode!=="staff");$("#login-error").classList.add("hidden")})});
+
+$("#login-form").addEventListener("submit",async e=>{e.preventDefault();$("#login-error").classList.add("hidden");const b=$("#login-btn"),bt=$("#login-btn-text");b.disabled=true;bt.innerHTML='<span class="spinner"></span> Signing in…';try{if(S.roleMode==="student")await studentLogin($("#student-code").value.trim().toUpperCase());else await staffLogin($("#staff-email").value.trim(),$("#staff-pass").value)}catch(err){$("#login-error").textContent=err.message;$("#login-error").classList.remove("hidden");b.disabled=false;bt.textContent="Continue"}});
+
+async function studentLogin(code){
+  if(!code)throw new Error("Please enter your access code.");
+  const snap=await get(ref(srcDb,"students"));if(!snap.exists())throw new Error("Student database is empty.");
+  const all=snap.val()||{};const entries=[];
+  if(all[code])entries.push({code,data:all[code]});
+  for(const[k,v]of Object.entries(all)){if(!v||k===code)continue;if((v.originalCode&&v.originalCode===code)||(v.code&&v.code===code))entries.push({code:k,data:v})}
+  if(!entries.length)throw new Error("Invalid access code.");
+  if(entries.find(e=>isDrop(e.data)))throw new Error("Account inactive. Contact adviser.");
+  const f=entries[0].data;
+  S.user={role:"student",name:f.name||f.fullName||"Student",lrn:f.lrn||"",primaryCode:code,codes:entries.map(e=>e.code),classIds:[...new Set(entries.map(e=>e.data.classId).filter(Boolean))],section:f.section||"",grade:f.grade||f.gradeLevel||""};
+  await bootApp();
+}
+
+async function staffLogin(email,pw){
+  if(!email||!pw)throw new Error("Email and password are required.");
+  const cred=await signInWithEmailAndPassword(srcAuth,email,pw).catch(e=>{const c=e.code||"";if(c.includes("invalid-credential")||c.includes("wrong-password")||c.includes("user-not-found"))throw new Error("Incorrect email or password.");throw new Error(e.message)});
+  const uid=cred.user.uid;
+  if(uid===ADMIN_UID){let n=email.split("@")[0];try{const s=await get(ref(srcDb,`teachers/${uid}`));if(s.exists())n=s.val().name||n}catch(e){}S.user={role:"admin",uid,email,name:n};await bootApp();return}
+  const ts=await get(ref(srcDb,`teachers/${uid}`));if(!ts.exists())throw new Error("Not registered as a teacher.");
+  const t=ts.val();S.user={role:"teacher",uid,email,name:t.name||t.fullName||email.split("@")[0],...t};await bootApp();
+}
+
+$("#logout-btn").addEventListener("click",async()=>{try{if(srcAuth.currentUser)await signOut(srcAuth)}catch(e){}S.user=null;S.currentPage=null;S.currentClassId=null;$("#view-login").classList.remove("hidden");$("#app").classList.add("hidden");$("#login-btn").disabled=false;$("#login-btn-text").textContent="Continue";$("#login-form").reset();$("#login-error").classList.add("hidden")});
+
+async function bootApp(){$("#view-login").classList.add("hidden");$("#app").classList.remove("hidden");const n=S.user.name||"—";$("#u-name").textContent=n;$("#u-role").textContent=S.user.role;$("#avatar").textContent=(n||"?").split(/\s+/).map(x=>x[0]).slice(0,2).join("").toUpperCase();subSrc();subGr();subTk();renderTabs();if(S.user.role==="admin")goto("admin-overview");else if(S.user.role==="teacher")goto("teacher-classes");else goto("student-grades")}
+
+function subSrc(){
+  onValue(ref(srcDb,"classes"),s=>{S.classes=s.val()||{};reconcileMyFinals();rr()});
+  onValue(ref(srcDb,"students"),s=>{S.students=s.val()||{};rr()});
+  onValue(ref(srcDb,"teachers"),s=>{S.teachers=s.val()||{};rr()});
+  onValue(ref(srcDb,"globalSettings"),s=>{S.settings=s.val()||{};updSY();rr()});
+  onValue(ref(srcDb,"signatories"),s=>{S.signatories=s.val()||{};rr()});
+  get(ref(srcDb,"schoolInfo")).then(s=>{if(s.exists())S.schoolInfo=s.val()}).catch(()=>{});
+}
+function subGr(){
+  onValue(ref(grDb,"grades"),s=>{S.grades=s.val()||{};rr()});
+  onValue(ref(grDb,"classConfig"),s=>{S.classConfig=s.val()||{};reconcileMyFinals();rr()});
+  onValue(ref(grDb,"shared"),s=>{S.shared=s.val()||{};rr()});
+}
+function subTk(){
+  onValue(ref(tkDb,"activities"),s=>{S.tkActs=s.val()||{};if(S.user&&S.user.role!=="student")reconcileMyFinals();rr()});
+  onValue(ref(tkDb,"quizzes"),s=>{S.tkQzs=s.val()||{};if(S.user&&S.user.role!=="student")reconcileMyFinals();rr()});
+  onValue(ref(tkDb,"submissions"),s=>{S.tkSubs=s.val()||{};if(S.user&&S.user.role!=="student")reconcileMyFinals();rr()});
+  onValue(ref(tkDb,"quizScores"),s=>{S.tkQzScores=s.val()||{};if(S.user&&S.user.role!=="student")reconcileMyFinals();rr()});
+}
+
+let _reconTmr=null;
+function reconcileMyFinals(){
+  if(!S.user||S.user.role==="student")return;
+  clearTimeout(_reconTmr);
+  _reconTmr=setTimeout(()=>{_reconcileNow().catch(()=>{})},600);
+}
+async function _reconcileNow(){
+  const uid=S.user.uid,isAdm=S.user.role==="admin";
+  const allMine=Object.entries(S.classes||{}).filter(([id,c])=>isAdm||c.teacherUid===uid);
+  const myLeaf=allMine.filter(([id,c])=>!isMAPEHClass(c.subject)&&!c.mapehParentId);
+  for(const[cid,c] of myLeaf){
+    if(!_hasWeights(cid))continue;
+    const w=_weights(cid),cnt=qCount(cid);
+    const roster=gCS(cid);
+    const classGr=(S.grades||{})[cid]||{};
+    for(const[code,_s] of roster){
+      const row=classGr[code]||{};
+      for(let qN=1;qN<=cnt;qN++){
+        const qk="q"+qN;
+        const stored=row[qk];
+        const tkQz=_pullTkQuizzes(cid,code,qN).filter(x=>x.hasScore);
+        const tkPT=_pullTkPTs(cid,code,qN).filter(x=>x.hasScore);
+        const compKey=qk+"_comp";
+        const compData=row[compKey]||{};
+        const exam=compData.exam||null;
+        const rem=compData.remedial||null;
+        const fin=_compFinal({quizzes:tkQz,pts:tkPT,exam,remedial:rem},w);
+        const newVal=fin!=null?+fin.toFixed(2):null;
+        if(newVal!==(stored==null||stored===""?null:+(+stored).toFixed(2))){
+          try{await update(ref(grDb,`grades/${cid}/${code}`),{[qk]:newVal,lastUpdatedBy:S.user.uid+"(auto)",lastUpdatedAt:Date.now()})}catch(e){}
+        }
+      }
+    }
+  }
+  const myChildLeaf=allMine.filter(([id,c])=>c.mapehParentId);
+  for(const[cid,c] of myChildLeaf){
+    if(!_hasWeights(cid))continue;
+    const w=_weights(cid),cnt=qCount(cid);
+    const roster=gCS(cid);
+    const classGr=(S.grades||{})[cid]||{};
+    for(const[code,_s] of roster){
+      const row=classGr[code]||{};
+      for(let qN=1;qN<=cnt;qN++){
+        const qk="q"+qN;
+        const stored=row[qk];
+        const tkQz=_pullTkQuizzes(cid,code,qN).filter(x=>x.hasScore);
+        const tkPT=_pullTkPTs(cid,code,qN).filter(x=>x.hasScore);
+        const compKey=qk+"_comp";
+        const compData=row[compKey]||{};
+        const fin=_compFinal({quizzes:tkQz,pts:tkPT,exam:compData.exam||null,remedial:compData.remedial||null},w);
+        const newVal=fin!=null?+fin.toFixed(2):null;
+        if(newVal!==(stored==null||stored===""?null:+(+stored).toFixed(2))){
+          try{await update(ref(grDb,`grades/${cid}/${code}`),{[qk]:newVal,lastUpdatedBy:S.user.uid+"(auto)",lastUpdatedAt:Date.now()})}catch(e){}
+        }
+      }
+    }
+  }
+  const myMAPEH=allMine.filter(([id,c])=>isMAPEHClass(c.subject)&&c.mapehChildren);
+  for(const[pid,pc] of myMAPEH){
+    const children=pc.mapehChildren||{};
+    const childCids=MAPEH_COMPS.map(k=>children[k]).filter(Boolean);
+    if(childCids.length!==4)continue;
+    const cnt=qCount(pid);
+    const roster=gCS(pid);
+    const parentGr=(S.grades||{})[pid]||{};
+    for(const[code,_s] of roster){
+      const row=parentGr[code]||{};
+      for(let qN=1;qN<=cnt;qN++){
+        const qk="q"+qN;
+        const childVals=childCids.map(ccid=>{
+          const cr=((S.grades||{})[ccid]||{})[code]||{};
+          const v=cr[qk];
+          return(v==null||v===""||isNaN(+v))?null:+v;
+        });
+        const valid=childVals.filter(v=>v!=null);
+        const newVal=valid.length===4?+(valid.reduce((a,b)=>a+b,0)/4).toFixed(2):null;
+        const stored=row[qk];
+        const storedNum=(stored==null||stored===""?null:+(+stored).toFixed(2));
+        if(newVal!==storedNum){
+          try{await update(ref(grDb,`grades/${pid}/${code}`),{[qk]:newVal,lastUpdatedBy:S.user.uid+"(mapeh-auto)",lastUpdatedAt:Date.now()})}catch(e){}
+        }
+      }
+    }
+  }
+}
+function rr(){if(S.currentPage)renderPage(S.currentPage,true)}
+function updSY(){const sy=aSY();const e=document.getElementById("login-sy");if(e)e.textContent=sy?`S.Y. ${sy}`:"S.Y. ——"}
+get(ref(srcDb,"globalSettings")).then(s=>{S.settings=s.val()||{};updSY()}).catch(()=>{});
+
+function getTabs(){
+  const r=S.user.role;
+  if(r==="admin")return[{key:"admin-overview",label:"Overview"},{key:"admin-classes",label:"Classes"},{key:"admin-teachers",label:"Teachers"},{key:"admin-students",label:"Students"},{key:"admin-grades",label:"Grade Book"},{key:"admin-audit",label:"Audit Log"}];
+  if(r==="teacher"){
+    const tabs=[{key:"teacher-classes",label:"My Classes"}];
+    const myShared=(S.shared||{})[S.user.uid];
+    if(myShared&&Object.keys(myShared).length>0)tabs.push({key:"teacher-shared",label:"Shared with Me"});
+    return tabs;
+  }
+  return[{key:"student-grades",label:"My Grades"}];
+}
+function renderTabs(){const nav=$("#tabs");nav.innerHTML="";for(const t of getTabs()){const b=el("button",{class:"top-tab","data-k":t.key},t.label);b.addEventListener("click",()=>goto(t.key));nav.appendChild(b)}}
+function goto(p){S.currentPage=p;if(p!=="teacher-grade")S.currentClassId=null;$$(".top-tab").forEach(b=>b.classList.toggle("active",b.dataset.k===p));renderPage(p)}
+function renderPage(p,ks=false){const h=$("#pages");const sc=h.scrollTop;h.innerHTML="";const pg=el("div",{class:"page active"});h.appendChild(pg);const map={"admin-overview":pgAdmOv,"admin-classes":pgAdmCl,"admin-teachers":pgAdmTe,"admin-students":pgAdmSt,"admin-grades":pgAdmGr,"admin-audit":pgAdmAu,"teacher-classes":pgTeCl,"teacher-grade":pgTeGr,"teacher-shared":pgTeShared,"student-grades":pgStGr};(map[p]||(()=>{}))(pg);if(ks)h.scrollTop=sc;const io=new IntersectionObserver(en=>{en.forEach(e=>{if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target)}})},{threshold:.1});pg.querySelectorAll(".reveal").forEach(n=>io.observe(n))}
+
+function pH(ey,ht,d){return el("div",{class:"page-head reveal"},[el("div",{class:"ey"},ey),el("h1",{html:ht}),d?el("div",{class:"desc"},d):null])}
+function mkB(l,c,f){const b=el("button",{class:`btn ${c}`});b.textContent=l;b.addEventListener("click",f);return b}
+function empS(t,d){const e=el("div",{class:"empty"});e.innerHTML=`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><path d="M9 10h.01M15 10h.01M9 16h6"/></svg><h3>${esc(t)}</h3><p>${esc(d)}</p>`;return e}
+function cfm(msg,fn){modal({title:`Please <em>confirm</em>`,body:`<p style="color:var(--txm);line-height:1.6">${esc(msg)}</p>`,actions:[{label:"Cancel",class:"ghost",onClick:closeModal},{label:"Confirm",class:"rs",onClick:async()=>{try{await fn();closeModal()}catch(e){toast(e.message,"err")}}}]})}
+function sC(l,v,s,k=""){return el("div",{class:`st ${k}`},[el("div",{class:"lb"},l),el("div",{class:"vl"},String(v)),el("div",{class:"sb"},s)])}
+
+function getSigs(opts){
+  const s=S.signatories||{};const si=S.schoolInfo||S.settings||{};
+  const cls=opts&&opts.classRef||null;
+  const teacher=S.user?.name||"";
+  let isAdviser=false;
+  if(cls){
+    const adv=(cls.adviser||"").trim().toLowerCase();
+    const tn=teacher.trim().toLowerCase();
+    if(adv&&tn&&(adv===tn||adv.includes(tn)||tn.includes(adv)))isAdviser=true;
+  }
+  return{
+    principal:s.principal||s.schoolHead||si.principal||si.schoolHead||(cls?cls.principal:"")||"",
+    teacher,
+    teacherRole:isAdviser?"Adviser":"Subject Teacher"
+  };
+}
+function pdfH(doc,title,sub,sy,opts={}){
+  const pw=doc.internal.pageSize.getWidth(),cx=pw/2;
+  doc.setFillColor(29,78,216);doc.rect(0,0,pw,2,"F");
+  doc.setFontSize(8);doc.setFont("helvetica","normal");doc.setTextColor(100,116,139);
+  doc.text("Republic of the Philippines",cx,10,{align:"center"});
+  doc.text("Department of Education",cx,14,{align:"center"});
+  doc.text("Region XI — Davao Region",cx,18,{align:"center"});
+  doc.text("Island Garden City of Samal — Babak District",cx,22,{align:"center"});
+  doc.setFont("helvetica","bold");doc.setFontSize(12);doc.setTextColor(29,78,216);
+  doc.text("COGON NATIONAL HIGH SCHOOL",cx,29,{align:"center"});
+  doc.setFont("helvetica","normal");doc.setFontSize(7);doc.setTextColor(100,116,139);
+  doc.text("Cogon, Babak District, Island Garden City of Samal",cx,33,{align:"center"});
+  doc.setDrawColor(29,78,216);doc.setLineWidth(.5);doc.line(14,36,pw-14,36);
+  doc.setFillColor(245,158,11);doc.rect(14,36.5,pw-28,1,"F");
+  doc.setFont("helvetica","bold");doc.setFontSize(11);doc.setTextColor(15,23,42);
+  doc.text(opts.reportTitle||"QUARTERLY GRADE REPORT",cx,44,{align:"center"});
+  if(sy){doc.setFontSize(9);doc.setFont("helvetica","normal");doc.text(`School Year: ${sy}`,cx,49,{align:"center"})}
+  if(opts.quarterLabel){doc.setFontSize(8);doc.setFont("helvetica","bold");doc.setTextColor(29,78,216);doc.text(opts.quarterLabel,cx,54,{align:"center"})}
+  const infoY=opts.quarterLabel?58:54;
+  doc.setFont("helvetica","bold");doc.setFontSize(10);doc.setTextColor(15,23,42);doc.text(title,14,infoY+4);
+  doc.setFont("helvetica","normal");doc.setFontSize(8);doc.setTextColor(100,116,139);doc.text(sub,14,infoY+9);
+  return infoY+16;
+}
+function pdfLegend(doc,startY){
+  const pw=doc.internal.pageSize.getWidth();
+  const ph=doc.internal.pageSize.getHeight();
+  let y=startY;
+  if(y>ph-60){doc.addPage();y=20}
+  doc.setFontSize(8);doc.setFont("helvetica","bold");doc.setTextColor(15,23,42);
+  doc.text("Legend:",14,y);y+=4.5;
+  doc.setFont("helvetica","normal");
+  const items=[
+    {c:[220,38,38],l:"Below 75 — Did Not Meet Expectations"},
+    {c:[217,119,6],l:"75-89 — Fair to Satisfactory"},
+    {c:[5,150,105],l:"90-94 — With Honors"},
+    {c:[30,58,138],l:"95-97 — With High Honors"},
+    {c:[124,45,18],l:"98-100 — With Highest Honors"}
+  ];
+  items.forEach(e=>{
+    doc.setFillColor(...e.c);doc.rect(14,y-2.8,3.5,3.5,"F");
+    doc.setTextColor(30,41,59);doc.text(e.l,19,y);y+=4.8;
+  });
+  return y;
+}
+function pdfSigs(doc,sigs){
+  const pw=doc.internal.pageSize.getWidth(),ph=doc.internal.pageSize.getHeight();
+  const tn=(sigs.teacher||"").trim();
+  const role=sigs.teacherRole||"Subject Teacher";
+  const pn=(sigs.principal||"").trim();
+  if(!tn&&!pn)return;
+
+  let y=doc.lastAutoTable?doc.lastAutoTable.finalY+6:ph-80;
+  y=pdfLegend(doc,y);
+  y+=10;
+
+  const blockH=24;
+  if(y+blockH>ph-18){doc.addPage();y=24}
+
+  const leftX=14;
+  const rightX=pw-14;
+  const labelY=y;
+  const nameY=y+14;
+  const lineY=y+13;
+  const roleY=y+18;
+
+  doc.setFont("helvetica","normal");doc.setFontSize(9);doc.setTextColor(15,23,42);
+  if(tn){
+    doc.text("Prepared by:",leftX,labelY);
+    const lineW=60;
+    const lineCenterX=leftX+lineW/2;
+    doc.setDrawColor(15,23,42);doc.setLineWidth(.3);
+    doc.line(leftX,lineY,leftX+lineW,lineY);
+    doc.setFont("helvetica","bold");doc.setFontSize(9.5);doc.setTextColor(15,23,42);
+    doc.text(tn.toUpperCase(),lineCenterX,nameY-1,{align:"center"});
+    doc.setFont("helvetica","normal");doc.setFontSize(8.5);doc.setTextColor(51,65,85);
+    doc.text(role,lineCenterX,roleY,{align:"center"});
+  }
+  if(pn){
+    doc.setFont("helvetica","normal");doc.setFontSize(9);doc.setTextColor(15,23,42);
+    doc.text("Noted by:",rightX-70,labelY);
+    const lineW=60;
+    const lineStartX=rightX-lineW;
+    const lineCenterX=lineStartX+lineW/2;
+    doc.setDrawColor(15,23,42);doc.setLineWidth(.3);
+    doc.line(lineStartX,lineY,rightX,lineY);
+    doc.setFont("helvetica","bold");doc.setFontSize(9.5);doc.setTextColor(15,23,42);
+    doc.text(pn.toUpperCase(),lineCenterX,nameY-1,{align:"center"});
+    doc.setFont("helvetica","normal");doc.setFontSize(8.5);doc.setTextColor(51,65,85);
+    doc.text("Principal",lineCenterX,roleY,{align:"center"});
+  }
+}
+function pdfFt(doc){const pw=doc.internal.pageSize.getWidth(),ph=doc.internal.pageSize.getHeight();const pages=doc.internal.getNumberOfPages();for(let i=1;i<=pages;i++){doc.setPage(i);doc.setDrawColor(199,210,254);doc.line(14,ph-12,pw-14,ph-12);doc.setFontSize(6);doc.setTextColor(100,116,139);doc.text("This document is system-generated and is for reference purposes only. For official records, please refer to the Report Card (SF 9).",14,ph-8);doc.text(`Page ${i}/${pages} · Generated: ${new Date().toLocaleString()} · eGrado Portal`,pw-14,ph-8,{align:"right"})}}
+function pdfSave(doc,name,sigs){if(sigs)pdfSigs(doc,sigs);pdfFt(doc);doc.save(name);toast("PDF generated.","ok")}
+
+function cGT(){let n=0;for(const bc of Object.values(S.grades||{}))for(const bs of Object.values(bc||{}))["q1","q2","q3","q4"].forEach(q=>{if(bs[q]!=null&&bs[q]!=="")n++});return n}
+
+function pgAdmOv(pg){
+  const cls=Object.values(S.classes).filter(iSY);const su=new Set(Object.values(S.students).filter(s=>!isDrop(s)).map(s=>s.originalCode||s.code||s.lrn||s.name));
+  pg.appendChild(pH("System Admin",`Command <em>overview</em>.`,`${aSY()?"S.Y. "+aSY()+" · ":""}Live view of the grading ecosystem.`));
+  const s=el("div",{class:"sg reveal"});s.append(sC("Classes",cls.length,"this year"),sC("Teachers",Object.keys(S.teachers).length,"faculty","am"),sC("Students",su.size,"learners","cy"),sC("Grades",cGT(),"recorded","rs"));pg.appendChild(s);
+
+  // Grading mode card
+  const sy=aSY()||"";
+  const cur=_gradingMode();
+  const gmCard=el("div",{class:"reveal",style:"margin:20px 0;padding:18px 22px;border-radius:14px;background:linear-gradient(135deg,#fff7ed,#fef3c7);border:1.5px solid #fbbf24;box-shadow:0 8px 24px -10px rgba(251,191,36,.5)"});
+  gmCard.innerHTML=`<div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:8px"><div style="width:42px;height:42px;border-radius:11px;background:linear-gradient(135deg,#f59e0b,#d97706);display:grid;place-items:center;flex-shrink:0;color:#fff"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 1v22M3 8h18M3 16h18"/></svg></div><div style="flex:1;min-width:200px"><div style="font-family:'Fraunces',serif;font-weight:700;font-size:18px;color:#78350f;letter-spacing:-.015em">Grading Mode <span style="font-size:11px;color:#92400e;font-weight:600;letter-spacing:.06em;text-transform:uppercase">· S.Y. ${esc(sy||"—")}</span></div><div style="font-size:12.5px;color:#78350f;line-height:1.5;margin-top:2px">Control how the system computes the <b>Final Grade</b> shown to students and on official PDFs.</div></div></div><div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px"><button id="gm-trans" class="btn ${cur==='transmuted'?'am':'ghost'}" style="padding:14px 16px;text-align:left;flex-direction:column;align-items:flex-start;gap:3px;justify-content:flex-start"><div style="font-weight:800;font-size:14px;display:flex;align-items:center;gap:6px;line-height:1.2"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">${cur==='transmuted'?'<circle cx="12" cy="12" r="10"/><path d="M9 12l2 2 4-4"/>':'<circle cx="12" cy="12" r="10"/>'}</svg>Transmuted (DepEd)</div><div style="font-size:11px;font-weight:500;line-height:1.45;opacity:.85">Apply DepEd Order 8 s. 2015 transmutation table to the initial grade. Standard for official report cards.</div></button><button id="gm-init" class="btn ${cur==='initial'?'am':'ghost'}" style="padding:14px 16px;text-align:left;flex-direction:column;align-items:flex-start;gap:3px;justify-content:flex-start"><div style="font-weight:800;font-size:14px;display:flex;align-items:center;gap:6px;line-height:1.2"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">${cur==='initial'?'<circle cx="12" cy="12" r="10"/><path d="M9 12l2 2 4-4"/>':'<circle cx="12" cy="12" r="10"/>'}</svg>Initial (raw)</div><div style="font-size:11px;font-weight:500;line-height:1.45;opacity:.85">Show the raw weighted grade (no transmutation). Useful for internal review or non-DepEd settings.</div></button></div><div style="margin-top:10px;font-size:11px;color:#78350f;font-style:italic">Setting applies to S.Y. ${esc(sy||"—")} only. Each school year can have its own mode.</div>`;
+  pg.appendChild(gmCard);
+  const setMode=async(m)=>{if(!sy){toast("No active school year.","err");return}try{await update(ref(srcDb,"globalSettings"),{[`gradingModeBySY/${sy.replace(/[.#$\[\]\/]/g,'_')}`]:m,gradingMode:m,gradingModeUpdatedAt:Date.now(),gradingModeUpdatedBy:S.user.uid});toast(`Grading mode → ${m==='transmuted'?'Transmuted (DepEd)':'Initial (raw)'}`,"ok");renderPage("admin-overview",true)}catch(e){toast(e.message||"Save failed","err")}};
+  gmCard.querySelector("#gm-trans").addEventListener("click",()=>setMode('transmuted'));
+  gmCard.querySelector("#gm-init").addEventListener("click",()=>setMode('initial'));
+
+  pg.appendChild(el("div",{class:"sh reveal"},[el("h2",{html:`Quick <em>links</em>`})]));
+  const qa=el("div",{class:"sg reveal"});
+  [{t:"Classes",d:"Browse all",go:"admin-classes"},{t:"Teachers",d:"Faculty",go:"admin-teachers"},{t:"Students",d:"Roster",go:"admin-students"},{t:"Grade book",d:"View grades",go:"admin-grades"}].forEach(q=>{const c=el("button",{class:"st",style:"text-align:left;cursor:pointer"});c.innerHTML=`<div class="lb">${q.t}</div><div class="vl" style="font-size:24px">→</div><div class="sb">${q.d}</div>`;c.addEventListener("click",()=>goto(q.go));qa.appendChild(c)});pg.appendChild(qa);
+}
+
+function pgAdmCl(pg){
+  pg.appendChild(pH("Catalog",`All <em>classes</em>`,"From the Attendance Tracker."));
+  const fb=el("div",{class:"filter-bar reveal"});fb.innerHTML=`<span class="fl">Filter:</span><input class="input" id="c-q" placeholder="Search…" style="flex:1;min-width:180px"><select id="c-g"><option value="">All grades</option>${["7","8","9","10","11","12"].map(g=>`<option value="${g}">Grade ${g}</option>`).join("")}</select>`;pg.appendChild(fb);
+  const out=el("div",{class:"reveal"});pg.appendChild(out);
+  const render=()=>{out.innerHTML="";const q=fb.querySelector("#c-q").value.toLowerCase().trim(),gl=fb.querySelector("#c-g").value;const fl=Object.entries(S.classes).filter(([,c])=>iSY(c)&&(!gl||String(c.gradeLevel)===gl||gL(c.gradeLevel)===gl)).filter(([,c])=>{if(!q)return true;const t=S.teachers[cT(c)]||{};return[c.subject,c.section,t.name].some(x=>(x||"").toLowerCase().includes(q))});if(!fl.length){out.appendChild(empS("No classes","Adjust filter."));return}const w=el("div",{class:"tw"}),t=el("table");t.innerHTML=`<thead><tr><th>Subject</th><th>Section</th><th>Grade</th><th>Teacher</th><th>Students</th><th>S.Y.</th></tr></thead>`;const tb=el("tbody");fl.sort((a,b)=>(a[1].subject||"").localeCompare(b[1].subject||""));for(const[cid,c]of fl){const te=S.teachers[cT(c)]||{},ro=gCS(cid).length,tr=el("tr");tr.style.cursor="pointer";tr.innerHTML=`<td><b>${esc(c.subject||"—")}</b></td><td>${esc(c.section||"—")}</td><td><span class="chip">Grade ${esc(gL(c.gradeLevel))}</span></td><td>${esc(te.name||"—")}</td><td class="mono">${ro}</td><td class="mono">${esc(c.schoolYear||"—")}</td>`;tr.addEventListener("click",()=>openInspector(cid));tb.appendChild(tr)}t.appendChild(tb);w.appendChild(t);out.appendChild(w)};
+  fb.querySelector("#c-q").oninput=render;fb.querySelector("#c-g").onchange=render;render();
+}
+
+function openInspector(cid){
+  const c=S.classes[cid];if(!c)return;const te=S.teachers[cT(c)]||{},ro=gCS(cid),g=(S.grades||{})[cid]||{},ks=qKeys(cid),cnt=qCount(cid);
+  const bd=el("div");bd.innerHTML=`<div style="display:flex;gap:5px;flex-wrap:wrap;margin-bottom:12px"><span class="chip am">${esc(c.subject||"—")}</span><span class="chip">Grade ${esc(gL(c.gradeLevel))}</span><span class="chip">${esc(c.section||"—")}</span></div><div style="color:var(--txs);font-size:12px;margin-bottom:12px">Teacher: <b style="color:var(--tx)">${esc(te.name||"—")}</b> · ${esc(cnt)} quarter${cnt>1?"s":""} · ${ro.length} students</div>`;
+  if(ro.length){const w=el("div",{class:"tw"}),t=el("table");t.innerHTML=`<thead><tr><th>Student</th>${ks.map(q=>`<th>${qLabel(q,cnt)}</th>`).join("")}<th>Final</th></tr></thead>`;const tb=el("tbody");ro.forEach(([code,s])=>{const r=g[code]||{},tr=el("tr");tr.innerHTML=`<td class="sn">${esc(s.name)}<span class="sm">LRN ${esc(s.lrn||"—")}</span></td>${ks.map(q=>`<td class="mono">${r[q]!=null?r[q]:"—"}</td>`).join("")}<td>${rF(r,ks)}</td>`;tb.appendChild(tr)});t.appendChild(tb);w.appendChild(t);bd.appendChild(w)}else bd.appendChild(empS("No students",""));
+  modal({title:`${esc(c.subject)} <em>inspector</em>`,body:bd,wide:true,actions:[
+    {label:"Download PDF",class:"am",onClick:()=>{closeModal();genClassPDF(cid)}},
+    {label:"Close",class:"ghost",onClick:closeModal}
+  ]});
+}
+
+function pgAdmTe(pg){
+  pg.appendChild(pH("Faculty",`All <em>teachers</em>`,"Faculty and their classes."));
+  const li=Object.entries(S.teachers);if(!li.length){pg.appendChild(empS("No teachers",""));return}
+  const w=el("div",{class:"tw reveal"}),t=el("table");t.innerHTML=`<thead><tr><th>Name</th><th>Email</th><th>Classes</th><th>Students</th></tr></thead>`;const tb=el("tbody");li.sort((a,b)=>(a[1].name||"").localeCompare(b[1].name||""));
+  for(const[uid,te]of li){const mc=Object.entries(S.classes).filter(([,c])=>cT(c)===uid&&iSY(c)),sc=mc.reduce((a,[cid])=>a+gCS(cid).length,0),tr=el("tr");tr.innerHTML=`<td><b>${esc(te.name||uid)}</b></td><td class="mono">${esc(te.email||"—")}</td><td>${mc.length?mc.map(([,c])=>`<span class="chip">${esc(c.subject||"?")}·${esc(c.section||"?")}</span>`).join(" "):"—"}</td><td class="mono">${sc}</td>`;tb.appendChild(tr)}
+  t.appendChild(tb);w.appendChild(t);pg.appendChild(w);
+}
+
+function pgAdmSt(pg){
+  pg.appendChild(pH("Roster",`All <em>students</em>`,"Dropped entries excluded."));
+  const ss=new Set();Object.values(S.classes).filter(iSY).forEach(c=>{if(c.section)ss.add(c.section)});
+  const so=[...ss].sort().map(s=>`<option value="${s}">${esc(s)}</option>`).join("");
+  const fb=el("div",{class:"filter-bar reveal"});fb.innerHTML=`<span class="fl">Filter:</span><input class="input" id="s-q" placeholder="Name, LRN, or code…" style="flex:1;min-width:180px"><select id="s-sec"><option value="">All sections</option>${so}</select>`;pg.appendChild(fb);
+  const out=el("div",{class:"reveal"});pg.appendChild(out);
+  const render=()=>{out.innerHTML="";const q=fb.querySelector("#s-q").value.toLowerCase().trim(),sf=fb.querySelector("#s-sec").value;const im=new Map();for(const[code,s]of Object.entries(S.students)){if(isDrop(s))continue;if(sf&&(s.section||"")!==sf)continue;const key=s.originalCode||s.lrn||code+"::"+(s.name||"");if(!im.has(key))im.set(key,{sample:s,codes:[],classIds:new Set()});const g=im.get(key);g.codes.push(code);if(s.classId)g.classIds.add(s.classId)}let rows=[...im.values()];if(q)rows=rows.filter(r=>[r.sample.name,r.sample.lrn,r.sample.originalCode,...r.codes].some(x=>String(x||"").toLowerCase().includes(q)));rows.sort((a,b)=>(a.sample.name||"").localeCompare(b.sample.name||""));if(!rows.length){out.appendChild(empS("No match","Adjust filter."));return}const w=el("div",{class:"tw"}),t=el("table");t.innerHTML=`<thead><tr><th>LRN</th><th>Name</th><th>Section</th><th>Subjects</th><th>Access Code</th></tr></thead>`;const tb=el("tbody");for(const r of rows){const s=r.sample,p=s.originalCode||r.codes[0],tr=el("tr");tr.innerHTML=`<td class="mono">${esc(s.lrn||"—")}</td><td><b>${esc(s.name||"—")}</b></td><td>${esc(s.section||"—")}</td><td class="mono">${r.classIds.size}</td><td><span class="mono" style="background:var(--amx);padding:2px 7px;border-radius:5px;font-weight:600;color:var(--amd);border:1px solid rgba(249,115,22,.25)">${esc(p)}</span></td>`;tb.appendChild(tr)}t.appendChild(tb);w.appendChild(t);out.appendChild(w)};
+  fb.querySelector("#s-q").oninput=render;fb.querySelector("#s-sec").onchange=render;render();
+}
+
+function pgAdmGr(pg){
+  pg.appendChild(pH("Ledger",`Grade <em>book</em>`,"Browse or override grades."));
+  const co=Object.entries(S.classes).filter(([,c])=>iSY(c)).sort((a,b)=>(a[1].subject||"").localeCompare(b[1].subject||"")).map(([id,c])=>`<option value="${id}">${esc(c.subject||"?")}${c.mapehParentId?" [MAPEH component]":""} · ${esc(c.section||"?")} · ${esc((S.teachers[cT(c)]||{}).name||"—")}</option>`).join("");
+  const fb=el("div",{class:"filter-bar reveal"});fb.innerHTML=`<span class="fl">Class:</span><select id="gb-class" style="flex:1;min-width:240px"><option value="">— choose —</option>${co}</select>`;pg.appendChild(fb);
+  const out=el("div",{class:"reveal"});pg.appendChild(out);
+  const render=()=>{out.innerHTML="";const cid=fb.querySelector("#gb-class").value;if(!cid){out.appendChild(empS("Pick a class",""));return}const c=S.classes[cid];if(!c)return;const te=S.teachers[cT(c)]||{},ro=gCS(cid),g=(S.grades||{})[cid]||{},ks=qKeys(cid),cnt=qCount(cid);
+  const hd=el("div",{class:"gh"});hd.innerHTML=`<div><div style="display:flex;gap:5px;margin-bottom:5px;flex-wrap:wrap"><span class="chip am">${esc(c.subject||"?")}</span><span class="chip">Grade ${esc(gL(c.gradeLevel))}</span><span class="chip">${esc(c.section||"?")}</span></div><div class="gh-t">${esc(c.subject)}</div><div class="gh-s">Teacher: ${esc(te.name||"—")} · ${ro.length} students · ${cnt} ${cnt===2?"semesters":cnt===3?"trimesters":"quarters"}</div></div>`;out.appendChild(hd);
+  if(!ro.length){out.appendChild(empS("No students",""));return}
+  const w=el("div",{class:"gt"}),t=el("table");t.innerHTML=`<thead><tr><th>Student</th>${ks.map(q=>`<th>${qLabel(q,cnt)}</th>`).join("")}<th>Final</th><th></th></tr></thead>`;const tb=el("tbody");ro.forEach(([code,s])=>{const r=g[code]||{},ha=ks.some(q=>r[q]!=null&&r[q]!==""),tr=el("tr");tr.innerHTML=`<td class="sn">${esc(s.name)}<span class="sm">LRN ${esc(s.lrn||"—")}</span></td>${ks.map(q=>`<td class="mono">${r[q]!=null&&r[q]!==""?(+r[q]).toFixed(2):"—"}</td>`).join("")}<td>${rF(r,ks)}</td><td>${ha?`<button class="ia del" title="Clear"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/></svg></button>`:""}</td>`;tr.querySelectorAll(".ia.del").forEach(b=>b.addEventListener("click",e=>{e.stopPropagation();cfm(`Clear grades for ${s.name}?`,async()=>{await remove(ref(grDb,`grades/${cid}/${code}`));await wA("grade_cleared",{classId:cid,studentCode:code,studentName:s.name});toast("Cleared.","ok")})}));tb.appendChild(tr)});t.appendChild(tb);w.appendChild(t);out.appendChild(w)};
+  fb.querySelector("#gb-class").onchange=render;render();
+}
+
+function pgAdmAu(pg){
+  pg.appendChild(pH("Timeline",`Audit <em>log</em>`,"Newest first."));const out=el("div",{class:"reveal"});pg.appendChild(out);
+  onValue(ref(grDb,"audit"),snap=>{out.innerHTML="";const data=snap.val()||{},en=Object.values(data).sort((a,b)=>(b.at||0)-(a.at||0)).slice(0,200);if(!en.length){out.appendChild(empS("No entries",""));return}const w=el("div",{class:"tw"}),t=el("table");t.innerHTML=`<thead><tr><th>When</th><th>Who</th><th>Action</th><th>Subject</th><th>Student</th><th>Details</th></tr></thead>`;const tb=el("tbody");for(const e of en){const cls=S.classes[e.classId]||{},d=[];if(e.quarter)d.push(`Q${e.quarter}`);if(e.from!=null)d.push(`from ${e.from}`);if(e.to!=null)d.push(`to ${e.to}`);const tr=el("tr");tr.innerHTML=`<td class="mono" style="font-size:10px">${new Date(e.at||0).toLocaleString()}</td><td>${esc(e.byName||"—")}</td><td><span class="chip ${e.action==="grade_cleared"?"rs":""}">${esc(e.action||"—")}</span></td><td>${esc(cls.subject||"—")}</td><td>${esc(e.studentName||"—")}</td><td class="mono" style="font-size:11px">${d.join(" ")||"—"}</td>`;tb.appendChild(tr)}t.appendChild(tb);w.appendChild(t);out.appendChild(w)});
+}
+
+function pgTeCl(pg){
+  pg.appendChild(pH("My Classes",`Welcome, <em>${esc(fN(S.user.name))}</em>.`,`Your assigned classes${aSY()?" · S.Y. "+aSY():""}.`));
+  const mc=Object.entries(S.classes).filter(([,c])=>cT(c)===S.user.uid&&iSY(c)&&!c.mapehParentId);
+  if(!mc.length){pg.appendChild(empS("No classes","Ask admin to assign."));return}
+  const sb=new Set(mc.map(([,c])=>c.subject).filter(Boolean)),ts=mc.reduce((a,[cid])=>a+gCS(cid).length,0);
+  const st=el("div",{class:"sg reveal"});st.append(sC("Classes",mc.length,"assigned"),sC("Subjects",sb.size,"unique","am"),sC("Learners",ts,"total","cy"));pg.appendChild(st);
+  const rptBar=el("div",{class:"reveal",style:"margin:14px 0 4px;padding:14px 18px;border-radius:12px;background:linear-gradient(135deg,#0a1440 0%,#1e3a8a 60%,#1e40af 100%);color:#fff;display:flex;align-items:center;gap:14px;flex-wrap:wrap;box-shadow:0 8px 24px -8px rgba(30,58,138,.45);position:relative;overflow:hidden"});
+  rptBar.innerHTML=`<div style="position:absolute;inset:0;background:radial-gradient(400px 180px at 85% 50%,rgba(249,115,22,.22),transparent 60%);pointer-events:none"></div><div style="width:42px;height:42px;border-radius:11px;background:linear-gradient(135deg,#f97316,#ea580c);display:grid;place-items:center;flex-shrink:0;box-shadow:0 8px 18px -6px rgba(249,115,22,.55);position:relative;z-index:1"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="color:#fff"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="15" y2="17"/></svg></div><div style="flex:1;min-width:200px;position:relative;z-index:1"><div style="font-family:'Fraunces',serif;font-weight:700;font-size:17px;letter-spacing:-.015em;margin-bottom:1px">Consolidated Grade Sheet</div><div style="font-size:12.5px;color:rgba(255,255,255,.7);line-height:1.45">One continuous PDF — every student, every subject, every quarter. Grouped per section.</div></div>`;
+  const allBtn=mkB("Generate All-Grades PDF","am",()=>openAllGradesPicker(mc));allBtn.style.position="relative";allBtn.style.zIndex="1";rptBar.appendChild(allBtn);
+  pg.appendChild(rptBar);
+  renderTabs();
+  pg.appendChild(el("div",{class:"sh reveal"},[el("h2",{html:`Your <em>classes</em>`})]));
+  const tiles=el("div",{class:"ct"});mc.sort((a,b)=>(a[1].subject||"").localeCompare(b[1].subject||""));
+  mc.forEach(([cid,c],i)=>{const ro=gCS(cid),cnt=qCount(cid);const isMC=(c.subject||"").toLowerCase().includes("mapeh")&&!isMAPEHComp(c.subject);const tile=el("button",{class:"ct-card reveal",style:`animation-delay:${i*50}ms`});tile.innerHTML=`<div class="ct-top"><span class="chip am">${esc(c.subject||"Subject")}</span>${c.gradeLevel?`<span class="chip">Grade ${esc(gL(c.gradeLevel))}</span>`:""}<span class="chip">${cnt===2?"Semester":cnt===3?"Trimester":"Quarterly"}</span>${isMC?'<span class="chip em">Music·Arts·PE·Health</span>':""}</div><div class="ct-name">${esc(c.section||"Section")}</div><div class="ct-meta">S.Y. ${esc(c.schoolYear||aSY()||"—")}${isMC?" · Auto-calculated from components":""}</div><div class="ct-foot"><div><span class="mono" style="font-size:13px;font-weight:700;color:var(--tx)">${ro.length}</span> <span style="font-size:10px">students</span></div><span class="ct-cta">${isMC?"Grade MAPEH →":"Open →"}</span></div>`;
+    const actRow=el("div",{style:"display:flex;gap:4px;margin-top:10px;position:relative;z-index:2"});
+    const rptBtn=mkB("Report","sm",ev=>{ev.stopPropagation();genClassDetailPDF(cid,c,"all")});
+    const codesBtn=mkB("Codes PDF","ghost sm",ev=>{ev.stopPropagation();genCodesPDF(cid,c)});
+    actRow.append(rptBtn,codesBtn);tile.appendChild(actRow);
+    tile.addEventListener("click",()=>{S.currentClassId=cid;S.currentQuarter=1;goto("teacher-grade")});tiles.appendChild(tile)});pg.appendChild(tiles);
+}
+
+function _studentKeys(code){
+  const s=(S.students||{})[code]||{};
+  const keys=new Set([code]);
+  if(s.code)keys.add(s.code);
+  if(s.originalCode)keys.add(s.originalCode);
+  if(s.lrn)keys.add(s.lrn);
+  return [...keys];
+}
+function _pullTkQuizzes(cid,code,qNum){
+  const out=[];const q=String(qNum);
+  const qzs=S.tkQzs||{};const sc=S.tkQzScores||{};
+  const keys=_studentKeys(code);
+  const list=Object.entries(qzs).filter(([id,qz])=>qz&&qz.classId===cid&&String(qz.quarter)===q).sort((a,b)=>{const na=+(a[1].quizNumber||0),nb=+(b[1].quizNumber||0);if(na!==nb)return na-nb;return(a[1].date||"").localeCompare(b[1].date||"")});
+  for(const[id,qz] of list){
+    const scoreMap=sc[id]||{};
+    let sub=null;
+    for(const k of keys){if(scoreMap[k]){sub=scoreMap[k];break}}
+    const max=+(qz.maxScore||qz.hps||qz.totalPoints||0)||null;
+    const scoreVal=sub&&sub.score!=null&&!isNaN(+sub.score)?+sub.score:null;
+    out.push({id,label:`Quiz ${qz.quizNumber||"#"+(out.length+1)}${qz.description?" · "+qz.description:""}`,s:scoreVal,m:max,date:qz.date||null,hasScore:scoreVal!=null&&max!=null&&max>0});
+  }
+  return out;
+}
+function _pullTkPTs(cid,code,qNum){
+  const out=[];const q=String(qNum);
+  const acts=S.tkActs||{};const subs=S.tkSubs||{};
+  const keys=_studentKeys(code);
+  const list=Object.entries(acts).filter(([id,a])=>a&&a.classId===cid&&String(a.quarter)===q).sort((a,b)=>{const na=+(a[1].activityNumber||0),nb=+(b[1].activityNumber||0);if(na!==nb)return na-nb;return(a[1].createdAt||0)-(b[1].createdAt||0)});
+  for(const[id,a] of list){
+    const subMap=subs[id]||{};
+    let sub=null;
+    for(const k of keys){if(subMap[k]){sub=subMap[k];break}}
+    const max=+(a.maxScore||0)||null;
+    const scoreVal=sub&&sub.score!=null&&!isNaN(+sub.score)?+sub.score:null;
+    out.push({id,label:`Activity ${a.activityNumber||"#"+(out.length+1)}${a.title?" · "+a.title:""}`,s:scoreVal,m:max,hasScore:scoreVal!=null&&max!=null&&max>0});
+  }
+  return out;
+}
+
+function _weights(cid){const cfg=(S.classConfig||{})[cid]||{};const w=cfg.weights||{};return{quiz:w.quiz!=null?+w.quiz:null,pt:w.pt!=null?+w.pt:null,exam:w.exam!=null?+w.exam:null}}
+function _hasWeights(cid){const w=_weights(cid);return w.quiz!=null&&w.pt!=null&&w.exam!=null&&Math.abs((w.quiz+w.pt+w.exam)-100)<0.01}
+function _compAve(items){if(!Array.isArray(items)||!items.length)return null;let ts=0,tm=0,n=0;for(const it of items){if(!it)continue;const s=+it.s,m=+it.m;if(!isNaN(s)&&!isNaN(m)&&m>0){ts+=(s/m)*100;n++}}return n>0?ts/n:null}
+function _examScore(comp){if(!comp||!comp.exam)return null;const e=comp.exam;if(isNaN(+e.s)||isNaN(+e.m)||+e.m<=0)return null;const p1=(+e.s/+e.m)*100;const r=comp.remedial;if(r&&!isNaN(+r.s)&&!isNaN(+r.m)&&+r.m>0){const p2=(+r.s/+r.m)*100;return(p1+p2)/2}return p1}
+function _compFinal(comp,w){if(!comp||!w||w.quiz==null||w.pt==null||w.exam==null)return null;const q=_compAve(comp.quizzes),p=_compAve(comp.pts),e=_examScore(comp);if(q==null&&p==null&&e==null)return null;const parts=[];if(q!=null)parts.push({v:q,w:w.quiz});if(p!=null)parts.push({v:p,w:w.pt});if(e!=null)parts.push({v:e,w:w.exam});const tW=parts.reduce((a,b)=>a+b.w,0);if(tW<=0)return null;return parts.reduce((a,b)=>a+b.v*b.w,0)/tW}
+
+// DepEd transmutation table (DO 8, s. 2015) — maps initial grade → transmuted grade
+// Source: DepEd Order No. 8, s. 2015, Annex - Transmutation Table
+function _transmute(initial){
+  if(initial==null||isNaN(+initial))return null;
+  const v=+initial;
+  if(v>=100)return 100;
+  if(v<=3.99)return 60;
+  // Standard DepEd transmutation table
+  const tbl=[
+    [100,100],[98.40,99],[96.80,98],[95.20,97],[93.60,96],[92.00,95],
+    [90.40,94],[88.80,93],[87.20,92],[85.60,91],[84.00,90],
+    [82.40,89],[80.80,88],[79.20,87],[77.60,86],[76.00,85],
+    [74.40,84],[72.80,83],[71.20,82],[69.60,81],[68.00,80],
+    [66.40,79],[64.80,78],[63.20,77],[61.60,76],[60.00,75],
+    [56.00,74],[52.00,73],[48.00,72],[44.00,71],[40.00,70],
+    [36.00,69],[32.00,68],[28.00,67],[24.00,66],[20.00,65],
+    [16.00,64],[12.00,63],[8.00,62],[4.00,61],[0,60]
+  ];
+  for(const[lower,trans] of tbl){if(v>=lower)return trans}
+  return 60;
+}
+function _gradingMode(){
+  const s=S.settings||{};
+  const sy=aSY()||"";
+  const perYear=(s.gradingModeBySY||{})[sy];
+  if(perYear==='transmuted'||perYear==='initial')return perYear;
+  return s.gradingMode==='initial'?'initial':'transmuted';
+}
+// Returns the value used as "the final grade" in the active mode
+function _finalForMode(initial){
+  if(initial==null)return null;
+  return _gradingMode()==='transmuted'?_transmute(initial):+(+initial).toFixed(2);
+}
+function _honors(g){if(g==null||isNaN(+g))return null;const v=+g;if(v>=98&&v<=100)return{l:"With Highest Honors",s:"highest"};if(v>=95&&v<=97.99)return{l:"With High Honors",s:"high"};if(v>=90&&v<=94.99)return{l:"With Honors",s:"std"};return null}
+function _honorsBadge(g,variant){const h=_honors(g);if(!h)return"";const star=`<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 1l3.09 6.26L22 8.27l-5 4.87 1.18 6.88L12 16.77l-6.18 3.25L7 13.14 2 8.27l6.91-1.01L12 1z"/></svg>`;if(variant==="mini")return `<span class="honor-badge ${h.s} mini" title="${h.l}">${star}</span>`;if(variant==="compact")return `<span class="honor-badge ${h.s}" title="${h.l}">${star}</span>`;return `<span class="honor-badge ${h.s}">${star}${h.l}</span>`}
+
+function openWeightsConfig(cid,c,onSaved){
+  const cur=_weights(cid);const had=_hasWeights(cid);
+  const bd=el("div");
+  bd.innerHTML=`<p style="color:var(--txs);font-size:13px;margin-bottom:14px">Set the grading weights for <b style="color:var(--tx)">${esc(c.subject||"this subject")}</b>. The three weights <b style="color:var(--am)">must total exactly 100%</b>.</p>
+    <div class="field"><label>Quizzes (%)</label><input id="w-q" class="input" type="number" min="0" max="100" step="1" value="${cur.quiz!=null?cur.quiz:""}" placeholder="e.g. 20"></div>
+    <div class="field"><label>Performance Tasks (%)</label><input id="w-p" class="input" type="number" min="0" max="100" step="1" value="${cur.pt!=null?cur.pt:""}" placeholder="e.g. 60"></div>
+    <div class="field"><label>Quarterly Exam (%)</label><input id="w-e" class="input" type="number" min="0" max="100" step="1" value="${cur.exam!=null?cur.exam:""}" placeholder="e.g. 20"></div>
+    <div id="w-sum" style="margin-top:12px;padding:11px 14px;border-radius:8px;font-size:13px;font-weight:700;text-align:center;transition:all .2s">Total: <span id="w-total" class="mono" style="font-size:16px">—</span>%</div>
+    <p style="color:var(--txs);font-size:11px;margin-top:10px;text-align:center">You cannot proceed with grading until the weights total exactly 100%.</p>`;
+  const recompute=()=>{const q=+bd.querySelector("#w-q").value||0,p=+bd.querySelector("#w-p").value||0,e=+bd.querySelector("#w-e").value||0;const sum=q+p+e;bd.querySelector("#w-total").textContent=sum;const box=bd.querySelector("#w-sum");if(Math.abs(sum-100)<0.01){box.style.background="var(--emX,#d1fae5)";box.style.color="var(--em,#059669)";box.style.border="1px solid rgba(5,150,105,.3)"}else{box.style.background="#fee2e2";box.style.color="#b91c1c";box.style.border="1px solid rgba(220,38,38,.3)"}};
+  bd.querySelectorAll("input").forEach(i=>i.addEventListener("input",recompute));setTimeout(recompute,20);
+  modal({title:`Grading <em>Weights</em> · ${esc(c.subject||"")}`,body:bd,dismissable:had,actions:[had?{label:"Cancel",class:"ghost",onClick:closeModal}:null,{label:had?"Update":"Save & Continue",class:"am",onClick:async()=>{const q=+bd.querySelector("#w-q").value,p=+bd.querySelector("#w-p").value,e=+bd.querySelector("#w-e").value;if([q,p,e].some(x=>isNaN(x)||x<0||x>100)){toast("Enter valid percentages (0–100).","err");return}const sum=q+p+e;if(Math.abs(sum-100)>0.01){toast(`Weights must total exactly 100%. Current: ${sum}%.`,"err");return}try{await update(ref(grDb,`classConfig/${cid}`),{weights:{quiz:q,pt:p,exam:e,setBy:S.user.uid,setAt:Date.now()}});toast("Weights saved.","ok");closeModal();if(onSaved)onSaved()}catch(er){toast(er.message||"Save failed","err")}}}].filter(Boolean)});
+}
+
+function openComponents(cid,code,qk,c){
+  if(!_hasWeights(cid)){openWeightsConfig(cid,c,()=>openComponents(cid,code,qk,c));return}
+  const w=_weights(cid),s=S.students[code]||{},cnt=qCount(cid);
+  const qNum=+qk.slice(1);
+  const r=((S.grades||{})[cid]||{})[code]||{};const compKey=qk+"_comp";
+  const orig=r[compKey]||{};
+  const comp={exam:orig.exam?{s:orig.exam.s??null,m:orig.exam.m??null}:null,remedial:orig.remedial?{s:orig.remedial.s??null,m:orig.remedial.m??null}:null};
+  const tkQzAll=_pullTkQuizzes(cid,code,qNum);
+  const tkPTAll=_pullTkPTs(cid,code,qNum);
+  const tkQz=tkQzAll.filter(x=>x.hasScore);
+  const tkPT=tkPTAll.filter(x=>x.hasScore);
+  const bd=el("div");
+  const srcBadge='<span class="tk-src" title="Pulled from TaskHub"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>TaskHub</span>';
+  const autoBadge='<span class="auto-badge" title="Auto-saves"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg>Auto-saves</span>';
+  const renderTkList=(items,kind,emptyMsg)=>{
+    if(!items.length)return `<div style="padding:14px;color:var(--txs);font-size:12px;text-align:center;border:1px dashed var(--br);border-radius:8px;background:#fff">${emptyMsg}</div>`;
+    return items.map((x,i)=>{const pct=(x.s!=null&&x.m!=null&&+x.m>0)?((+x.s/+x.m)*100).toFixed(1):null;const missing=!x.hasScore;return `<div class="comp-row tk-row ${missing?"pending":""}"><span style="font-size:11px;color:var(--txs);font-weight:700;width:22px">#${i+1}</span><div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:1px"><span style="font-size:12.5px;font-weight:600;color:var(--tx);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(x.label||"—")}</span>${missing?`<span style="font-size:10.5px;color:#b91c1c;font-weight:600">No score submitted yet</span>`:`<span style="font-size:10.5px;color:var(--txs)">Score from TaskHub · auto-updates</span>`}</div><span class="mono" style="font-size:13px;font-weight:700;color:${missing?"#b91c1c":"var(--tx)"};min-width:72px;text-align:right">${x.s!=null?x.s:"—"} / ${x.m!=null?x.m:"—"}</span><span class="mono" style="font-size:11px;color:var(--txs);min-width:48px;text-align:right">${pct!=null?pct+"%":""}</span></div>`}).join("");
+  };
+  const renderEx=()=>{const e=comp.exam||{},rm=comp.remedial;const p1=(e.s!=null&&e.m!=null&&+e.m>0)?((+e.s/+e.m)*100).toFixed(1)+"%":"—";let h=`<div class="comp-row"><span style="font-size:11px;color:var(--txs);font-weight:700;width:60px">1st Exam</span><input class="input comp-s" type="number" min="0" step="0.01" data-kind="exam" data-f="s" value="${e.s!=null?e.s:""}" placeholder="Score"><span style="color:var(--txs);font-weight:700">/</span><input class="input comp-s" type="number" min="0.01" step="0.01" data-kind="exam" data-f="m" value="${e.m!=null?e.m:""}" placeholder="Max"><span class="mono" style="font-size:11px;color:var(--txs);min-width:48px;text-align:right">${p1}</span></div>`;if(rm){const p2=(rm.s!=null&&rm.m!=null&&+rm.m>0)?((+rm.s/+rm.m)*100).toFixed(1)+"%":"—";h+=`<div class="comp-row"><span style="font-size:11px;color:var(--am);font-weight:700;width:60px">Remedial</span><input class="input comp-s" type="number" min="0" step="0.01" data-kind="remedial" data-f="s" value="${rm.s!=null?rm.s:""}" placeholder="Score"><span style="color:var(--txs);font-weight:700">/</span><input class="input comp-s" type="number" min="0.01" step="0.01" data-kind="remedial" data-f="m" value="${rm.m!=null?rm.m:""}" placeholder="Max"><span class="mono" style="font-size:11px;color:var(--txs);min-width:48px;text-align:right">${p2}</span><button class="btn ghost sm comp-del-rem" title="Remove remedial"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg></button></div><div style="font-size:11px;color:var(--txs);margin-top:4px;padding-left:66px">Exam score = (1st Exam + Remedial) ÷ 2</div>`}else{h+=`<button class="btn ghost sm" id="add-rem" style="margin-top:6px"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg> Add Remedial Exam</button>`}return h};
+  const renderSummary=()=>{const q=_compAve(tkQz),p=_compAve(tkPT),e=_examScore(comp),fin=_compFinal({quizzes:tkQz,pts:tkPT,exam:comp.exam,remedial:comp.remedial},w);const saveInd=`<div id="save-ind" style="display:none;font-size:10.5px;font-weight:700;color:var(--em,#059669);margin-top:8px;text-align:center;letter-spacing:.04em;text-transform:uppercase"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" style="vertical-align:-2px;margin-right:3px"><path d="M20 6L9 17l-5-5"/></svg>Saved</div>`;return `<div class="comp-sum"><div class="comp-row-sum"><span>Quiz Average <span class="w-pill">${w.quiz}%</span> · <span style="font-size:10.5px;color:var(--txs)">${tkQz.length} scored</span></span><span class="mono" style="font-weight:700;color:var(--tx)">${q!=null?q.toFixed(2):"—"}</span></div><div class="comp-row-sum"><span>PT Average <span class="w-pill">${w.pt}%</span> · <span style="font-size:10.5px;color:var(--txs)">${tkPT.length} scored</span></span><span class="mono" style="font-weight:700;color:var(--tx)">${p!=null?p.toFixed(2):"—"}</span></div><div class="comp-row-sum"><span>Quarterly Exam <span class="w-pill">${w.exam}%</span></span><span class="mono" style="font-weight:700;color:var(--tx)">${e!=null?e.toFixed(2):"—"}</span></div><div class="comp-row-sum fin"><span>Final Grade · ${qLabel(qk,cnt)}</span><span class="mono" style="font-weight:900;font-size:20px;color:var(--am)">${fin!=null?fin.toFixed(2):"—"}</span></div>${_honors(fin)?`<div style="margin-top:10px;text-align:center">${_honorsBadge(fin)}</div>`:""}${saveInd}</div>`};
+  bd.innerHTML=`<div style="display:flex;gap:5px;flex-wrap:wrap;margin-bottom:14px;font-size:12px"><span class="chip am">${esc(s.name||"Student")}</span><span class="chip">${qLabel(qk,cnt)}</span><span class="chip">LRN ${esc(s.lrn||"—")}</span></div>
+  <div style="padding:10px 13px;background:var(--bx);border:1px solid var(--br);border-radius:8px;margin-bottom:12px;font-size:11.5px;color:var(--txs);line-height:1.5"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" style="vertical-align:-2px;color:var(--b)"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg> Quizzes &amp; Performance Tasks sync <b style="color:var(--tx)">automatically from TaskHub</b>. The exam score below <b style="color:var(--tx)">auto-saves as you type</b>. No save button needed.</div>
+  <div class="comp-sec"><div class="comp-hd"><div class="comp-ti">Quizzes <span class="w-pill">${w.quiz}%</span>${srcBadge}</div></div><div id="list-quizzes">${renderTkList(tkQzAll,"quizzes",tkQzAll.length===0?"No quizzes posted in TaskHub for this quarter yet.":"No quizzes with scores for this student.")}</div></div>
+  <div class="comp-sec"><div class="comp-hd"><div class="comp-ti">Performance Tasks <span class="w-pill">${w.pt}%</span>${srcBadge}</div></div><div id="list-pts">${renderTkList(tkPTAll,"pts",tkPTAll.length===0?"No activities posted in TaskHub for this quarter yet.":"No activities with scores for this student.")}</div></div>
+  <div class="comp-sec"><div class="comp-hd"><div class="comp-ti">Quarterly Exam <span class="w-pill">${w.exam}%</span>${autoBadge}</div></div><div id="list-exam">${renderEx()}</div></div>
+  <div id="comp-sum-wrap">${renderSummary()}</div>`;
+  const refresh=()=>{bd.querySelector("#list-exam").innerHTML=renderEx();bd.querySelector("#comp-sum-wrap").innerHTML=renderSummary()};
+  let saveTmr=null;
+  const doSave=async()=>{
+    const cleanExam=(comp.exam&&comp.exam.s!=null&&comp.exam.m!=null&&+comp.exam.m>0&&!isNaN(+comp.exam.s))?{s:+comp.exam.s,m:+comp.exam.m}:null;
+    const cleanRem=(comp.remedial&&comp.remedial.s!=null&&comp.remedial.m!=null&&+comp.remedial.m>0&&!isNaN(+comp.remedial.s))?{s:+comp.remedial.s,m:+comp.remedial.m}:null;
+    const storedComp=(cleanExam||cleanRem)?{exam:cleanExam,remedial:cleanRem}:null;
+    const tkQzNow=_pullTkQuizzes(cid,code,qNum).filter(x=>x.hasScore);
+    const tkPTNow=_pullTkPTs(cid,code,qNum).filter(x=>x.hasScore);
+    const fin=_compFinal({quizzes:tkQzNow,pts:tkPTNow,exam:cleanExam,remedial:cleanRem},w);
+    const val=fin!=null?+fin.toFixed(2):null;
+    try{
+      await update(ref(grDb,`grades/${cid}/${code}`),{[compKey]:storedComp,[qk]:val,lastUpdatedBy:S.user.uid,lastUpdatedAt:Date.now()});
+      await wA("grade_auto",{classId:cid,studentCode:code,studentName:s.name||"",quarter:qk.slice(1),to:val});
+      const ind=bd.querySelector("#save-ind");if(ind){ind.style.display="block";clearTimeout(ind._t);ind._t=setTimeout(()=>{ind.style.display="none"},1800)}
+    }catch(er){toast(er.message||"Save failed","err")}
+  };
+  const queueSave=()=>{clearTimeout(saveTmr);saveTmr=setTimeout(doSave,750)};
+  bd.addEventListener("input",ev=>{const t=ev.target;if(!t.classList.contains("comp-s"))return;const kind=t.dataset.kind,f=t.dataset.f;const raw=t.value.trim();const v=raw===""?null:+raw;if(kind==="exam"||kind==="remedial"){if(!comp[kind])comp[kind]={s:null,m:null};comp[kind][f]=v}bd.querySelector("#comp-sum-wrap").innerHTML=renderSummary();const row=t.closest(".comp-row");if(row){const spans=row.querySelectorAll("span.mono");const pctSpan=spans[spans.length-1];if(pctSpan){const it=comp[kind];const pct=(it&&it.s!=null&&it.m!=null&&+it.m>0)?((+it.s/+it.m)*100).toFixed(1)+"%":"—";pctSpan.textContent=pct}}queueSave()});
+  bd.addEventListener("click",ev=>{if(ev.target.closest("#add-rem")){comp.remedial={s:null,m:null};refresh();return}if(ev.target.closest(".comp-del-rem")){comp.remedial=null;refresh();queueSave();return}});
+  modal({title:`Grade <em>Components</em>`,body:bd,actions:[{label:"Clear Exam",class:"rs",onClick:async()=>{if(!confirm("Clear exam scores for this quarter? Quiz & PT averages from TaskHub will still be used."))return;try{comp.exam=null;comp.remedial=null;await update(ref(grDb,`grades/${cid}/${code}`),{[compKey]:null,lastUpdatedBy:S.user.uid,lastUpdatedAt:Date.now()});const tkQzNow=_pullTkQuizzes(cid,code,qNum).filter(x=>x.hasScore);const tkPTNow=_pullTkPTs(cid,code,qNum).filter(x=>x.hasScore);const fin=_compFinal({quizzes:tkQzNow,pts:tkPTNow,exam:null,remedial:null},w);await update(ref(grDb,`grades/${cid}/${code}`),{[qk]:fin!=null?+fin.toFixed(2):null,lastUpdatedBy:S.user.uid,lastUpdatedAt:Date.now()});await wA("grade_cleared",{classId:cid,studentCode:code,studentName:s.name||"",quarter:qk.slice(1)});toast("Exam cleared.","ok");closeModal();renderPage("teacher-grade",true)}catch(er){toast(er.message||"Clear failed","err")}}},{label:"Done",class:"am",onClick:async()=>{clearTimeout(saveTmr);await doSave();closeModal();renderPage("teacher-grade",true)}}]});
+}
+
+function pgTeGr(pg){
+  const cid=S.currentClassId;if(!cid){goto("teacher-classes");return}const c=S.classes[cid];if(!c||cT(c)!==S.user.uid){toast("Not assigned.","err");goto("teacher-classes");return}
+  const cnt=qCount(cid),ks=qKeys(cid);
+  pg.appendChild(el("div",{style:"margin-bottom:14px"},mkB(c.mapehParentId?"← Back to MAPEH":"← Back","ghost sm",()=>{if(c.mapehParentId){S.currentClassId=c.mapehParentId;renderPage("teacher-grade",true)}else{goto("teacher-classes")}})));
+  if(c.mapehParentId){
+    const parent=S.classes[c.mapehParentId]||{};
+    const crumb=el("div",{class:"reveal",style:"padding:10px 14px;background:linear-gradient(90deg,#fff7ed,#ffedd5);border:1px solid rgba(249,115,22,.3);border-radius:10px;margin-bottom:12px;font-size:12px;color:#7c2d12;display:flex;align-items:center;gap:8px;flex-wrap:wrap"});
+    crumb.innerHTML=`<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg><span>Grading MAPEH component: <b>${esc(c.subject||"").split("·").pop().trim()}</b></span><span style="color:#9a3412">·</span><span>Parent: <b>${esc(parent.subject||"MAPEH")} — ${esc(parent.section||"")}</b></span>`;
+    pg.appendChild(crumb);
+  }
+  const hd=el("div",{class:"gh reveal"});hd.innerHTML=`<div><div style="display:flex;gap:5px;margin-bottom:5px;flex-wrap:wrap"><span class="chip am">${esc(c.subject||"Subject")}</span><span class="chip">Grade ${esc(gL(c.gradeLevel))}</span><span class="chip">${esc(c.section||"—")}</span><span class="chip">${cnt===2?"Semester":cnt===3?"Trimester":"Quarterly"}</span>${(!isMAPEHClass(c.subject))?(_hasWeights(cid)?`<span class="w-pill">Q:${_weights(cid).quiz}% · PT:${_weights(cid).pt}% · E:${_weights(cid).exam}%</span>`:`<span class="w-pill missing">Weights not set</span>`):""}</div><div class="gh-t">${esc(c.subject||"Grades")}</div><div class="gh-s">Grades auto-calculate from components. S.Y. ${esc(c.schoolYear||aSY()||"—")}</div></div><div style="display:flex;gap:6px;position:relative;flex-wrap:wrap">${(!isMAPEHClass(c.subject))?`<button class="btn ${_hasWeights(cid)?"ghost":"am"} sm" id="wt-btn"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18M5 8l7-5 7 5M5 16l7 5 7-5"/></svg>Weights</button>`:""}<button class="btn am sm" id="rpt-btn"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Reports</button><button class="btn cy sm" id="share-btn"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>Share</button><button class="btn ghost sm" id="cfg-btn"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.32 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></button><button class="btn ghost sm" id="vc-btn"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>Codes</button></div>`;pg.appendChild(hd);
+  const wtBtn=hd.querySelector("#wt-btn");if(wtBtn)wtBtn.addEventListener("click",e=>{e.stopPropagation();openWeightsConfig(cid,c,()=>renderPage("teacher-grade",true))});
+  hd.querySelector("#rpt-btn").addEventListener("click",e=>{e.stopPropagation();openReports(cid,c)});
+  hd.querySelector("#share-btn").addEventListener("click",e=>{e.stopPropagation();openShare(cid,c)});
+  hd.querySelector("#cfg-btn").addEventListener("click",e=>{e.stopPropagation();openQConfig(cid,c)});
+  hd.querySelector("#vc-btn").addEventListener("click",e=>{e.stopPropagation();openCodes(cid,c)});
+
+  const qt=el("div",{class:"qt reveal"});ks.forEach((qk,i)=>{const b=el("button",{class:"q-tab"+((i+1)===S.currentQuarter?" active":"")},qLabel(qk,cnt));b.addEventListener("click",()=>{S.currentQuarter=i+1;renderPage("teacher-grade",true)});qt.appendChild(b)});pg.appendChild(qt);
+
+  const ro=gCS(cid);if(!ro.length){pg.appendChild(empS("No students",""));return}
+  const aq="q"+S.currentQuarter;
+  const isMC=isMAPEHClass(c.subject);
+  if(isMC){
+    renderMAPEHParent(pg,cid,c,ro,ks,cnt,aq);return;
+  }
+  if(!_hasWeights(cid)){
+    const warn=el("div",{class:"reveal",style:"padding:18px 20px;border-radius:12px;background:linear-gradient(135deg,#fef3c7,#fde68a);border:1.5px solid #fcd34d;margin-bottom:14px"});
+    warn.innerHTML=`<div style="display:flex;align-items:flex-start;gap:12px"><div style="width:36px;height:36px;border-radius:10px;background:#f59e0b;display:grid;place-items:center;flex-shrink:0;color:#fff"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 9v4M12 17h.01"/><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg></div><div style="flex:1"><div style="font-weight:800;color:#78350f;font-size:15px;margin-bottom:4px">Grading Weights Required</div><div style="color:#78350f;font-size:13px;line-height:1.55">Before you can enter grades for <b>${esc(c.subject||"")}</b>, you must set the percentage weights for <b>Quizzes</b>, <b>Performance Tasks</b>, and the <b>Quarterly Exam</b>. The three weights must total <b>exactly 100%</b>.</div></div></div><div style="margin-top:14px;text-align:right">${""}</div>`;
+    const warnBtn=mkB("Set Grading Weights","am",()=>openWeightsConfig(cid,c,()=>renderPage("teacher-grade",true)));warn.querySelector("div:last-child").appendChild(warnBtn);
+    pg.appendChild(warn);return;
+  }
+
+  const mode=_gradingMode();
+  const modeBadge=`<span class="mode-pill" title="System-wide grading mode">${mode==='transmuted'?'Transmuted (DepEd)':'Initial (raw)'}</span>`;
+  const headCells=ks.map(q=>`<th colspan="2" style="text-align:center;border-bottom:2px solid var(--am)">${qLabel(q,cnt)}</th>`).join("");
+  const subHeadCells=ks.map(()=>`<th class="sub-h">Initial</th><th class="sub-h fin-h">Final</th>`).join("");
+  const w=el("div",{class:"gt reveal"}),t=el("table",{class:"gt-twin"});
+  t.innerHTML=`<thead><tr><th rowspan="2" style="width:24%;vertical-align:bottom">Student${modeBadge}</th>${headCells}<th rowspan="2">Final<br><span style="font-size:9px;font-weight:600;color:var(--txs)">Average</span></th><th rowspan="2">Honors</th><th rowspan="2">✍</th></tr><tr>${subHeadCells}</tr></thead>`;
+  const tb=el("tbody"),cg=(S.grades||{})[cid]||{};
+  const wts=_weights(cid);
+  const computeLive=(code,q)=>{
+    const row=cg[code]||{};
+    const qN=+q.slice(1);
+    const compData=row[q+"_comp"]||{};
+    const tkQ=_pullTkQuizzes(cid,code,qN).filter(x=>x.hasScore);
+    const tkP=_pullTkPTs(cid,code,qN).filter(x=>x.hasScore);
+    return _compFinal({quizzes:tkQ,pts:tkP,exam:compData.exam,remedial:compData.remedial},wts);
+  };
+  for(const[code,s]of ro){const r=cg[code]||{},hf=r.feedback&&r.feedback[aq],ac=s.originalCode||code;
+    const tr=el("tr");
+    const liveVals={};ks.forEach(q=>{const lv=computeLive(code,q);if(lv!=null)liveVals[q]=+lv.toFixed(2)});
+    const rowForFinal={...r,...liveVals};
+    // For honors / final-average: use the "final" value per quarter (transmuted or initial based on mode)
+    const finalsByQ={};ks.forEach(q=>{const init=liveVals[q]!=null?liveVals[q]:(r[q]==null||r[q]===""||isNaN(+r[q])?null:+r[q]);finalsByQ[q]=init==null?null:_finalForMode(init)});
+    const finValid=Object.values(finalsByQ).filter(v=>v!=null);
+    const fin=finValid.length?finValid.reduce((a,b)=>a+b,0)/finValid.length:null;
+    const honB=_honorsBadge(fin,"compact");
+    const cellsHTML=ks.map(q=>{
+      const lv=liveVals[q];const stored=r[q];
+      const initial=lv!=null?lv:(stored==null||stored===""||isNaN(+stored)?null:+stored);
+      const empty=initial==null;
+      const transmuted=empty?null:_transmute(initial);
+      const finalShown=mode==='transmuted'?transmuted:initial;
+      const sx=s.sex?` data-sex="${esc((s.sex||'').toString().toLowerCase())}"`:'';
+      return `<td class="cell-init"${sx}><button class="grade-pill ${empty?"empty":""}" data-code="${code}" data-q="${q}">${empty?"—":initial.toFixed(2)}</button></td><td class="cell-final ${empty?"":finalShown>=90?'g-h':finalShown>=75?'g-m':'g-l'}">${empty?'<span style="color:var(--txs)">—</span>':`<b class="mono">${typeof finalShown==='number'?(mode==='transmuted'?finalShown:finalShown.toFixed(2)):finalShown}</b>${_honors(finalShown)?" "+_honorsBadge(finalShown,"mini"):""}`}</td>`;
+    }).join("");
+    tr.innerHTML=`<td class="sn">${esc(s.name)}<span class="sm">${esc(s.sex||"")}${s.sex?" · ":""}LRN ${esc(s.lrn||"—")} · ${esc(ac)}</span></td>${cellsHTML}<td><span class="fc" data-code="${code}">${fin!=null?(mode==='transmuted'?Math.round(fin):fin.toFixed(2)):"—"}</span></td><td data-honors="${code}" style="text-align:center">${honB||'<span style="color:var(--txs);font-size:11px">—</span>'}</td><td><button class="fb-i ${hf?"has":""}" data-fb="${code}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></button></td>`;
+    tb.appendChild(tr)}
+  t.appendChild(tb);w.appendChild(t);pg.appendChild(w);
+
+  w.addEventListener("click",e=>{const p=e.target.closest(".grade-pill");if(p){e.preventDefault();openComponents(cid,p.dataset.code,p.dataset.q,c);return}});
+
+  w.addEventListener("click",e=>{const b=e.target.closest(".fb-i");if(!b)return;const code=b.dataset.fb,s=S.students[code],r=((S.grades||{})[cid]||{})[code]||{},ex=(r.feedback||{})[aq]||"";const bd=el("div");bd.innerHTML=`<p style="color:var(--txs);font-size:12px;margin-bottom:8px"><b style="color:var(--tx)">${esc(s?.name||"Student")}</b> · ${qLabel(aq,cnt)}</p><div class="field"><label>Feedback</label><textarea id="fb-text" class="input" rows="4" style="resize:vertical;min-height:70px" placeholder="Leave a note…">${esc(ex)}</textarea></div>`;modal({title:`Feedback <em>· ${qLabel(aq,cnt)}</em>`,body:bd,actions:[{label:"Cancel",class:"ghost",onClick:closeModal},ex?{label:"Remove",class:"rs",onClick:async()=>{try{await update(ref(grDb,`grades/${cid}/${code}/feedback`),{[aq]:null});toast("Removed.","ok");closeModal()}catch(e){toast(e.message,"err")}}}:null,{label:"Save",class:"am",onClick:async()=>{const v=document.getElementById("fb-text").value.trim();try{await update(ref(grDb,`grades/${cid}/${code}`),{feedback:{...((S.grades||{})[cid]||{})[code]?.feedback||{},[aq]:v||null},lastUpdatedBy:S.user.uid,lastUpdatedAt:Date.now()});toast(v?"Saved.":"Removed.","ok");closeModal()}catch(e){toast(e.message,"err")}}}].filter(Boolean)})});
+}
+
+function renderMAPEHParent(pg,cid,c,roster,ks,cnt,aq){
+  const children=c.mapehChildren||{};
+  const orderedChildren=MAPEH_COMPS.map(k=>({key:k,label:MAPEH_LABELS[k],cid:children[k]})).filter(x=>x.cid&&S.classes[x.cid]);
+  if(!orderedChildren.length){
+    const warn=el("div",{class:"reveal",style:"padding:18px 20px;border-radius:12px;background:linear-gradient(135deg,#fef3c7,#fde68a);border:1.5px solid #fcd34d;margin-bottom:14px"});
+    warn.innerHTML=`<div style="display:flex;align-items:flex-start;gap:12px"><div style="width:36px;height:36px;border-radius:10px;background:#f59e0b;display:grid;place-items:center;flex-shrink:0;color:#fff"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 9v4M12 17h.01"/><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg></div><div style="flex:1"><div style="font-weight:800;color:#78350f;font-size:15px;margin-bottom:4px">MAPEH components not yet created</div><div style="color:#78350f;font-size:13px;line-height:1.55">This MAPEH class does not yet have its four component classes (Music, Arts, PE, Health). Please open AttendTrack and edit this class to auto-generate them.</div></div></div>`;
+    pg.appendChild(warn);return;
+  }
+  const note=el("div",{class:"reveal",style:"padding:13px 16px;background:linear-gradient(135deg,#fff7ed,#ffedd5);border:1px solid rgba(249,115,22,.3);border-radius:10px;margin-bottom:18px;font-size:12.5px;color:#7c2d12;line-height:1.55"});
+  note.innerHTML=`<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" style="vertical-align:-2px;margin-right:4px"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg> <b>MAPEH is a composite subject.</b> Grade each of the four components below (Music, Arts, PE, Health) independently — each has its own weights and pulls quizzes/PTs from TaskHub. The MAPEH final per quarter is the <b>average</b> of the four component finals and updates automatically.`;
+  pg.appendChild(note);
+  const tiles=el("div",{class:"ct",style:"margin-bottom:22px"});
+  orderedChildren.forEach(({key,label,cid:childCid},i)=>{
+    const childClass=S.classes[childCid]||{};
+    const hasWt=_hasWeights(childCid);
+    const cnt2=qCount(childCid);
+    let qSum=0,qN=0;
+    roster.forEach(([code])=>{const lv=_computeChildLive(childCid,code,S.currentQuarter);if(lv!=null){qSum+=lv;qN++}});
+    const avgDisp=qN>0?(qSum/qN).toFixed(2):"—";
+    const clr={music:"#ef4444",arts:"#8b5cf6",pe:"#3b82f6",health:"#10b981"}[key]||"#f97316";
+    const tile=el("button",{class:"ct-card reveal",style:`animation-delay:${i*50}ms;border-left:4px solid ${clr}`});
+    tile.innerHTML=`<div class="ct-top"><span class="chip" style="background:${clr}20;color:${clr};border-color:${clr}40;font-weight:700">${label}</span>${hasWt?`<span class="chip" style="font-size:10px">Q:${_weights(childCid).quiz}% · PT:${_weights(childCid).pt}% · E:${_weights(childCid).exam}%</span>`:`<span class="chip" style="background:#fee2e2;color:#991b1b;border-color:#fecaca;font-size:10px">⚠ Weights needed</span>`}</div><div class="ct-name" style="color:${clr}">${label}</div><div class="ct-meta">${roster.length} students · ${cnt2===2?"Semester":cnt2===3?"Trimester":"Quarterly"}${hasWt?"":" · Configure weights to start"}</div><div class="ct-foot"><div><span style="font-size:10px;color:var(--txs)">Class Avg · ${qLabel(aq,cnt2)}</span><br><span class="mono" style="font-size:18px;font-weight:800;color:${clr}">${avgDisp}</span></div><span class="ct-cta">Grade ${label} →</span></div>`;
+    tile.addEventListener("click",()=>{S.currentClassId=childCid;S.currentQuarter=S.currentQuarter||1;goto("teacher-grade")});
+    tiles.appendChild(tile);
+  });
+  pg.appendChild(tiles);
+
+  const tableWrap=el("div",{class:"reveal",style:"margin-top:20px"});
+  const mode=_gradingMode();
+  const modeNote=mode==='transmuted'?'Transmuted (DepEd)':'Initial (raw)';
+  tableWrap.innerHTML=`<h3 style="font-family:'Fraunces',serif;font-weight:700;font-size:19px;letter-spacing:-.02em;color:var(--tx);margin-bottom:10px">Composite <em style="color:var(--am);font-style:italic">MAPEH</em> Grades <span class="mode-pill" style="display:inline-block;margin-left:8px">${modeNote}</span></h3><p style="color:var(--txs);font-size:12px;margin-bottom:14px">Each quarter grade is the average of the 4 components. Initial = raw weighted; Final = ${mode==='transmuted'?'transmuted (DepEd)':'same as initial'}.</p>`;
+  const w=el("div",{class:"gt"}),t=el("table");t.innerHTML=`<thead><tr><th style="width:22%">Student</th>${MAPEH_COMPS.map(k=>`<th style="width:8%">${MAPEH_LABELS[k]}</th>`).join("")}<th style="background:linear-gradient(180deg,#ffedd5,#fed7aa);color:#7c2d12;font-weight:800">MAPEH ${qLabel(aq,cnt)} Initial</th><th style="background:linear-gradient(180deg,#fef3c7,#fde68a);color:#78350f;font-weight:800">MAPEH ${qLabel(aq,cnt)} Final</th><th>Avg</th><th>Honors</th></tr></thead>`;
+  const tb=el("tbody");
+  for(const[code,s] of roster){
+    const tr=el("tr");
+    const ac=s.originalCode||code;
+    const compVals=orderedChildren.map(ch=>_computeChildLive(ch.cid,code,S.currentQuarter));
+    const valid=compVals.filter(v=>v!=null);
+    const mapehQ=valid.length===4?valid.reduce((a,b)=>a+b,0)/4:null;
+    const mapehQFin=mapehQ==null?null:_finalForMode(mapehQ);
+    const finVals={};
+    ks.forEach(qk=>{const qn=+qk.slice(1);const vs=orderedChildren.map(ch=>_computeChildLive(ch.cid,code,qn)).filter(v=>v!=null);if(vs.length===4){const init=vs.reduce((a,b)=>a+b,0)/4;finVals[qk]=_finalForMode(init)}});
+    const finList=Object.values(finVals);
+    const finAvg=finList.length?finList.reduce((a,b)=>a+b,0)/finList.length:null;
+    const finAvgDisp=finAvg==null?null:(mode==='transmuted'?Math.round(finAvg):+finAvg.toFixed(2));
+    let cells=`<td class="sn">${esc(s.name)}<span class="sm">${esc(s.sex||"")}${s.sex?" · ":""}LRN ${esc(s.lrn||"—")} · ${esc(ac)}</span></td>`;
+    compVals.forEach((v,idx)=>{const clr={music:"#ef4444",arts:"#8b5cf6",pe:"#3b82f6",health:"#10b981"}[orderedChildren[idx].key];cells+=`<td style="text-align:center"><span class="mono" style="font-size:12.5px;font-weight:700;color:${v==null?'var(--txs)':clr}">${v==null?"—":v.toFixed(2)}</span></td>`});
+    cells+=`<td style="text-align:center;background:#fff7ed"><span class="mono" style="font-size:13px;font-weight:800;color:${mapehQ==null?'var(--txs)':'#7c2d12'}">${mapehQ==null?"—":mapehQ.toFixed(2)}</span></td>`;
+    cells+=`<td style="text-align:center;background:#fffbeb"><span class="mono" style="font-size:14px;font-weight:900;color:${mapehQFin==null?'var(--txs)':(mapehQFin>=90?'#059669':mapehQFin>=75?'#d97706':'#dc2626')}">${mapehQFin==null?"—":(mode==='transmuted'?mapehQFin:mapehQFin.toFixed(2))}</span>${mapehQFin!=null&&_honors(mapehQFin)?" "+_honorsBadge(mapehQFin,"mini"):""}</td>`;
+    cells+=`<td style="text-align:center"><span class="mono" style="font-weight:700">${finAvgDisp==null?"—":finAvgDisp}</span></td>`;
+    cells+=`<td style="text-align:center">${_honorsBadge(finAvg,"compact")||'<span style="color:var(--txs);font-size:11px">—</span>'}</td>`;
+    tr.innerHTML=cells;tb.appendChild(tr);
+  }
+  t.appendChild(tb);w.appendChild(t);tableWrap.appendChild(w);pg.appendChild(tableWrap);
+}
+
+function renderMAPEHGrading(){}
+
+function openQConfig(cid,c){
+  const curr=qCount(cid);
+  const bd=el("div");bd.innerHTML=`<p style="color:var(--txs);font-size:13px;margin-bottom:14px">Choose how many grading periods for <b style="color:var(--tx)">${esc(c.subject)}</b>.</p><div class="field"><label>Grading Periods</label><select class="sel" id="qc-sel">${[{v:4,l:"4 Quarters (Q1–Q4)"},{v:3,l:"3 Trimesters (T1–T3)"},{v:2,l:"2 Semesters (S1–S2)"}].map(o=>`<option value="${o.v}" ${o.v===curr?"selected":""}>${o.l}</option>`).join("")}</select></div>`;
+  modal({title:`Settings <em>· ${esc(c.subject)}</em>`,body:bd,actions:[{label:"Cancel",class:"ghost",onClick:closeModal},{label:"Save",class:"am",onClick:async()=>{const n=+bd.querySelector("#qc-sel").value;await setQCount(cid,n);toast(`Set to ${n} ${n===2?"semesters":n===3?"trimesters":"quarters"}.`,"ok");closeModal()}}]});
+}
+
+function openShare(cid,c){
+  const allTeachers=Object.entries(S.teachers).filter(([uid])=>uid!==S.user.uid).sort((a,b)=>(a[1].name||"").localeCompare(b[1].name||""));
+  const bd=el("div");bd.innerHTML=`<p style="color:var(--txs);font-size:13px;margin-bottom:14px">Share <b style="color:var(--tx)">${esc(c.subject)} · ${esc(c.section)}</b> with an adviser so they can view (but not edit) grades.</p><div class="field"><label>Select Teacher (Adviser)</label><select class="sel" id="sh-sel"><option value="">— choose —</option>${allTeachers.map(([uid,t])=>`<option value="${uid}">${esc(t.name||uid)}${t.email?" · "+esc(t.email):""}</option>`).join("")}</select></div>`;
+  const existingShares=[];
+  for(const[advUid,classes]of Object.entries(S.shared||{})){if((classes||{})[cid]){const t=S.teachers[advUid]||{};existingShares.push({uid:advUid,name:t.name||advUid})}}
+  if(existingShares.length){const list=el("div",{style:"margin-top:14px"});list.innerHTML=`<div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--txs);margin-bottom:6px">Currently shared with</div>`;existingShares.forEach(sh=>{const row=el("div",{style:"display:flex;justify-content:space-between;align-items:center;padding:8px 10px;background:var(--bg);border-radius:6px;margin-bottom:4px"});row.innerHTML=`<span style="font-weight:600;font-size:13px;color:var(--tx)">${esc(sh.name)}</span>`;const rb=mkB("Remove","rs sm",async()=>{await remove(ref(grDb,`shared/${sh.uid}/${cid}`));toast("Removed.","ok");closeModal()});row.appendChild(rb);list.appendChild(row)});bd.appendChild(list)}
+  modal({title:`Share <em>grades</em>`,body:bd,actions:[{label:"Cancel",class:"ghost",onClick:closeModal},{label:"Share",class:"cy",onClick:async()=>{const uid=bd.querySelector("#sh-sel").value;if(!uid){toast("Select a teacher.","err");return}await set(ref(grDb,`shared/${uid}/${cid}`),{sharedBy:S.user.uid,sharedByName:S.user.name||"",sharedAt:Date.now(),subject:c.subject||"",section:c.section||"",schoolYear:c.schoolYear||aSY()||""});toast("Shared successfully.","ok");closeModal()}}]});
+}
+
+function openCodes(cid,c){
+  const ro=gCS(cid);const bd=el("div");bd.innerHTML=`<p style="color:var(--txs);font-size:12px;margin-bottom:12px">Student access codes for <b style="color:var(--tx)">${esc(c.subject)}</b>.</p>`;
+  const w=el("div",{class:"tw"}),t=el("table");t.innerHTML=`<thead><tr><th>#</th><th>Name</th><th>LRN</th><th>Access Code</th></tr></thead>`;const tb=el("tbody");ro.forEach(([code,s],i)=>{const ac=s.originalCode||code,tr=el("tr");tr.innerHTML=`<td class="mono">${i+1}</td><td><b>${esc(s.name||"—")}</b></td><td class="mono">${esc(s.lrn||"—")}</td><td><span class="mono" style="background:var(--amx);padding:2px 7px;border-radius:5px;font-weight:600;color:var(--amd)">${esc(ac)}</span></td>`;tb.appendChild(tr)});t.appendChild(tb);w.appendChild(t);bd.appendChild(w);
+  modal({title:`Access codes <em>· ${esc(c.subject)}</em>`,body:bd,wide:true,actions:[{label:"Download PDF",class:"am",onClick:()=>{closeModal();genCodesPDF(cid,c)}},{label:"Close",class:"ghost",onClick:closeModal}]});
+}
+
+function openAllGradesPicker(mc){
+  const sections=[...new Set(mc.map(([,c])=>c.section).filter(Boolean))].sort();
+  const bd=el("div");
+  const cntSample=mc.length?qCount(mc[0][0]):4;
+  bd.innerHTML=`<p style="color:var(--txs);font-size:12.5px;margin-bottom:14px;line-height:1.55">Generate a single consolidated PDF showing <b style="color:var(--tx)">every student's grades</b> across <b style="color:var(--tx)">all your subjects and all quarters</b>. Students are grouped per section; all pages flow continuously.</p>
+  <div class="field" style="margin-bottom:12px"><label>Sections to include</label><div id="sec-checks" style="display:flex;flex-direction:column;gap:6px;max-height:200px;overflow:auto;padding:6px;background:var(--bg);border:1px solid var(--brs);border-radius:6px">${sections.map(sec=>{const secClasses=mc.filter(([,c])=>c.section===sec).length;const secStu=mc.filter(([,c])=>c.section===sec).reduce((a,[id])=>a+gCS(id).length,0);return `<label style="display:flex;align-items:center;gap:8px;padding:7px 10px;background:#fff;border:1px solid var(--brs);border-radius:6px;cursor:pointer"><input type="checkbox" value="${esc(sec)}" checked style="width:15px;height:15px;accent-color:var(--am)"><span style="font-weight:600;font-size:13px;color:var(--tx);flex:1">${esc(sec)}</span><span style="font-size:10.5px;color:var(--txs)">${secClasses} subjects · ${secStu} students</span></label>`}).join("")}</div></div>
+  <div class="field"><label>Period to include</label><select class="sel" id="qf-pick"><option value="all">All ${cntSample===2?"Semesters":cntSample===3?"Trimesters":"Quarters"}</option><option value="q1">${qLabel("q1",cntSample)} only</option><option value="q2">${qLabel("q2",cntSample)} only</option>${cntSample>=3?`<option value="q3">${qLabel("q3",cntSample)} only</option>`:""}${cntSample>=4?`<option value="q4">${qLabel("q4",cntSample)} only</option>`:""}</select></div>
+  <div style="padding:10px 13px;background:var(--bx);border:1px solid var(--br);border-radius:8px;margin-top:12px;font-size:11.5px;color:var(--txs);line-height:1.55"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" style="vertical-align:-2px;color:var(--b)"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg> The PDF uses DepEd subject order and computes General Average per student per quarter.</div>`;
+  modal({title:`Consolidated <em>grade sheet</em>`,body:bd,wide:true,actions:[{label:"Cancel",class:"ghost",onClick:closeModal},{label:"Generate PDF",class:"am",onClick:()=>{const picked=[...bd.querySelectorAll("#sec-checks input:checked")].map(i=>i.value);if(!picked.length){toast("Pick at least one section.","err");return}const qf=bd.querySelector("#qf-pick").value;closeModal();setTimeout(()=>genAllGradesPDF(mc,picked,qf),120)}}]});
+}
+
+function genAllGradesPDF(mc,sectionsIncluded,qf="all"){
+  try{
+    const{jsPDF}=window.jspdf;const doc=new jsPDF({orientation:"landscape",unit:"mm",format:"a4"});
+    const sy=aSY()||"";const tName=S.user.name||"Teacher";
+    const includeSet=new Set(sectionsIncluded);
+    const bySection={};
+    mc.forEach(([id,c])=>{if(!includeSet.has(c.section))return;if(!bySection[c.section])bySection[c.section]={classes:[],students:new Map()};bySection[c.section].classes.push({id,data:c})});
+    Object.keys(bySection).forEach(sec=>{bySection[sec].classes.sort((a,b)=>depedSort(a,b));bySection[sec].classes.forEach(({id})=>{gCS(id).forEach(([code,s])=>{const key=s.lrn||code;if(!bySection[sec].students.has(key))bySection[sec].students.set(key,{name:s.name||"",lrn:s.lrn||"",sex:s.sex||""})})})});
+    const secList=Object.keys(bySection).sort();
+    if(!secList.length){toast("No data to include.","err");return}
+    let totalStudents=0;secList.forEach(sec=>{totalStudents+=bySection[sec].students.size});
+    const title="Consolidated Grade Sheet";
+    const sub=`${tName} · ${totalStudents} students across ${secList.length} section${secList.length>1?"s":""}${qf!=="all"?" · "+qLabel(qf,4):""}`;
+    let y=pdfH(doc,title,sub,sy,{quarterLabel:qf!=="all"?qLabel(qf,4):null,reportTitle:"TEACHER GRADE REPORT"});
+    const pageH=doc.internal.pageSize.getHeight();
+    const addSectionHeader=(sec,secData)=>{
+      if(y>pageH-30){doc.addPage();y=pdfH(doc,title,sub,sy,{quarterLabel:qf!=="all"?qLabel(qf,4):null,reportTitle:"TEACHER GRADE REPORT"})}
+      doc.setFillColor(249,115,22);doc.rect(14,y,doc.internal.pageSize.getWidth()-28,8,"F");
+      doc.setTextColor(255,255,255);doc.setFont("helvetica","bold");doc.setFontSize(10);
+      doc.text(`SECTION: ${sec}`,18,y+5.8);
+      doc.setFontSize(8);doc.setFont("helvetica","normal");
+      doc.text(`${secData.students.size} students · ${secData.classes.length} subjects`,doc.internal.pageSize.getWidth()-18,y+5.8,{align:"right"});
+      y+=11;
+    };
+    secList.forEach((sec,secIdx)=>{
+      const secData=bySection[sec];
+      addSectionHeader(sec,secData);
+      const students=[...secData.students.entries()].sort((a,b)=>a[1].name.localeCompare(b[1].name));
+      const subjects=secData.classes;
+      const cntForSec=qCount(subjects[0].id);
+      const qKeysUse=qf==="all"?qKeys(subjects[0].id):[qf];
+      const head=[["#","Student Name","LRN"]];
+      subjects.forEach(sb=>{const subj=sb.data.subject||"?";if(qf==="all"&&qKeysUse.length>1){qKeysUse.forEach(q=>head[0].push(`${subj}\n${qLabel(q,cntForSec)}`));head[0].push(`${subj}\nFinal`)}else{head[0].push(`${subj}${qf!=="all"?"\n"+qLabel(qf,cntForSec):""}`)}});
+      head[0].push("GEN\nAVG");
+      const body=[];
+      const mode=_gradingMode();
+      const fmtG=v=>v==null?"—":(mode==='transmuted'?String(v):(+v).toFixed(2));
+      students.forEach((entry,i)=>{
+        const[stuKey,st]=entry;
+        const row=[i+1,st.name,st.lrn||"—"];
+        let sumVals=0,numVals=0;
+        subjects.forEach(sb=>{
+          const lookupCid=_rosterCid(sb.id);
+          const sCodes=Object.entries(S.students).filter(([,s2])=>s2.classId===lookupCid&&(s2.lrn===st.lrn||(!st.lrn&&!s2.lrn&&s2.name===st.name))).map(([c2])=>c2);
+          const sCode=sCodes[0]||"";
+          const r=((S.grades||{})[sb.id]||{})[sCode]||{};
+          if(qf==="all"&&qKeysUse.length>1){
+            const finalsByQ=qKeysUse.map(q=>{const v=r[q];const init=(v==null||v===""||isNaN(+v))?null:+v;return init==null?null:_finalForMode(init)});
+            finalsByQ.forEach(f=>row.push(fmtG(f)));
+            const valid=finalsByQ.filter(x=>x!=null);
+            const avg=valid.length?valid.reduce((a,b)=>a+b,0)/valid.length:null;
+            row.push(fmtG(avg==null?null:(mode==='transmuted'?Math.round(avg):avg)));
+            if(avg!=null){sumVals+=avg;numVals++}
+          }else{
+            const useQ=qf==="all"?qKeysUse[0]:qf;
+            const v=r[useQ];const init=(v==null||v===""||isNaN(+v))?null:+v;
+            const fin=init==null?null:_finalForMode(init);
+            row.push(fmtG(fin));
+            if(fin!=null){sumVals+=fin;numVals++}
+          }
+        });
+        const ga=numVals>0?(sumVals/numVals):null;
+        row.push(fmtG(ga==null?null:(mode==='transmuted'?Math.round(ga):ga)));
+        body.push(row);
+      });
+      const nonDataCols=3;
+      const lastColIdx=head[0].length-1;
+      doc.autoTable({
+        startY:y,head,body,theme:"grid",
+        styles:{fontSize:6.5,cellPadding:1.8,lineColor:[199,210,254],lineWidth:.2,textColor:[15,23,42],valign:"middle"},
+        headStyles:{fillColor:[10,20,64],textColor:[255,255,255],fontStyle:"bold",fontSize:6,halign:"center",valign:"middle",minCellHeight:10},
+        columnStyles:{0:{halign:"center",cellWidth:7},1:{cellWidth:40,fontStyle:"bold"},2:{cellWidth:22,fontSize:6}},
+        alternateRowStyles:{fillColor:[255,247,237]},
+        didParseCell:d=>{
+          if(d.section==="body"&&d.column.index>=nonDataCols){
+            d.cell.styles.halign="center";d.cell.styles.fontStyle="bold";
+            const v=parseFloat(d.cell.raw);
+            if(!isNaN(v)){d.cell.styles.textColor=v>=98?[124,45,18]:v>=95?[30,58,138]:v>=90?[5,150,105]:v>=75?[217,119,6]:[220,38,38]}
+          }
+          if(d.section==="body"&&d.column.index===lastColIdx){d.cell.styles.fillColor=[255,237,213];d.cell.styles.fontStyle="bold"}
+        },
+        margin:{left:14,right:14,bottom:20},
+        didDrawPage:()=>{
+          const pg=doc.internal.getCurrentPageInfo().pageNumber;
+          doc.setFontSize(7.5);doc.setTextColor(100,116,139);
+          doc.text(`eGrado · ${tName} · S.Y. ${sy}`,14,pageH-8);
+          doc.text(`Page ${pg}`,doc.internal.pageSize.getWidth()-14,pageH-8,{align:"right"});
+        }
+      });
+      y=doc.lastAutoTable.finalY+8;
+      if(secIdx<secList.length-1&&y>pageH-40){doc.addPage();y=pdfH(doc,title,sub,sy,{quarterLabel:qf!=="all"?qLabel(qf,4):null,reportTitle:"TEACHER GRADE REPORT"})}
+    });
+    const sampleCid=mc.find(([id])=>includeSet.has((S.classes[id]||{}).section))?.[0];
+    const sampleC=sampleCid?S.classes[sampleCid]:null;
+    const sig=getSigs({classRef:sampleC});
+    pdfSave(doc,`eGrado_AllGrades_${tName.replace(/\s+/g,"_")}_${qf!=="all"?qf+"_":""}SY${sy}.pdf`,sig);
+  }catch(e){
+    toast("PDF failed: "+(e.message||""),"err");console.error(e);
+  }
+}
+
+function openReports(cid,c){
+  const mc=Object.entries(S.classes).filter(([,cl])=>cT(cl)===S.user.uid&&iSY(cl)&&cl.section===c.section).sort((a,b)=>depedSort({data:a[1]},{data:b[1]}));
+  const cnt=qCount(cid),ks=qKeys(cid);
+  const bd=el("div");
+  bd.innerHTML=`<div class="field" style="margin-bottom:14px"><label>Quarter / Period to include</label><select class="sel" id="rpt-qf"><option value="all">All ${cnt===2?"Semesters":cnt===3?"Trimesters":"Quarters"}</option>${ks.map(q=>`<option value="${q}">${qLabel(q,cnt)} only</option>`).join("")}</select></div><div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--txs);margin-bottom:8px">Report Type</div>`;
+  [{id:"class",l:`Class report — ${c.subject} (all students)`,d:"Full student list with quarterly grades for this subject"},{id:"this",l:`This subject summary — ${c.subject}`,d:"Final averages only, compact view"},{id:"all",l:`All subjects — ${c.section}`,d:"Full section report (DepEd order)"},{id:"pick",l:"Select specific subjects",d:"Choose which to include"}].forEach(o=>{const d=el("button",{class:"ct-card",style:"margin-bottom:8px;cursor:pointer;border-left-color:var(--am)"});d.innerHTML=`<div style="font-weight:700;font-size:14px;color:var(--tx)">${o.l}</div><div style="color:var(--txs);font-size:11px;margin-top:2px">${o.d}</div>`;d.addEventListener("click",()=>{const qf=bd.querySelector("#rpt-qf").value;closeModal();if(o.id==="class")genClassDetailPDF(cid,c,qf);else if(o.id==="this")genClassPDF(cid,qf);else if(o.id==="all"){const all=mc.map(([id])=>id);genMultiPDF(all,c,qf)}else openSubjectPicker(mc,c,qf)});bd.appendChild(d)});
+  const ro=gCS(cid);bd.innerHTML+=`<div style="margin-top:16px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--txs);margin-bottom:6px">Individual Student</div>`;
+  const sw=el("div");sw.innerHTML=`<div class="field"><select class="sel" id="rpt-stu"><option value="">— choose student —</option>${ro.map(([code,s])=>`<option value="${code}">${esc(s.name)}</option>`).join("")}</select></div>`;bd.appendChild(sw);
+  const ib=mkB("Generate individual PDF","cy sm",()=>{const sel=bd.querySelector("#rpt-stu").value;const qf=bd.querySelector("#rpt-qf").value;if(!sel){toast("Select a student.","err");return}closeModal();genIndPDF(sel,c,qf)});ib.style.marginTop="8px";ib.style.width="100%";bd.appendChild(ib);
+  modal({title:`Generate <em>report</em>`,body:bd,wide:true,actions:[{label:"Close",class:"ghost",onClick:closeModal}]});
+}
+
+function openSubjectPicker(mc,c,qf="all"){
+  const bd=el("div");bd.innerHTML=`<p style="color:var(--txs);font-size:12px;margin-bottom:10px">Select subjects to include.</p>`;
+  const checks=el("div",{style:"display:flex;flex-direction:column;gap:6px"});mc.forEach(([id,cl])=>{const row=el("label",{style:"display:flex;align-items:center;gap:8px;padding:8px 12px;background:var(--bg);border:1px solid var(--brs);border-radius:6px;cursor:pointer"});row.innerHTML=`<input type="checkbox" value="${id}" checked style="width:16px;height:16px;accent-color:var(--b)"><span style="font-weight:600;font-size:13px;color:var(--tx)">${esc(cl.subject||"?")}</span>`;checks.appendChild(row)});bd.appendChild(checks);
+  modal({title:`Select <em>subjects</em>`,body:bd,actions:[{label:"Cancel",class:"ghost",onClick:closeModal},{label:"Generate",class:"am",onClick:()=>{const sel=[...checks.querySelectorAll("input:checked")].map(i=>i.value);if(!sel.length){toast("Select at least one.","err");return}closeModal();genMultiPDF(sel,c,qf)}}]});
+}
+
+function genCodesPDF(cid,c){
+  const{jsPDF}=window.jspdf;const doc=new jsPDF({unit:"mm",format:"a4"});
+  const sy=c.schoolYear||aSY()||"";const ro=gCS(cid);const te=S.teachers[cT(c)]||{};
+  let y=pdfH(doc,`Access Codes — ${c.subject||"Subject"} · ${c.section||"Section"}`,`Teacher: ${te.name||"—"} · ${ro.length} students · S.Y. ${sy}`,sy,{reportTitle:"STUDENT ACCESS CODES"});
+  const head=[["#","Student Name","LRN","Access Code"]];
+  const body=ro.map(([code,s],i)=>[i+1,s.name||"—",s.lrn||"—",s.originalCode||code]);
+  doc.autoTable({startY:y,head,body,theme:"grid",styles:{fontSize:10,cellPadding:4,lineColor:[199,210,254],lineWidth:.25,textColor:[15,23,42]},headStyles:{fillColor:[29,78,216],textColor:[255,255,255],fontStyle:"bold",fontSize:9,halign:"center"},columnStyles:{0:{halign:"center",cellWidth:10},1:{cellWidth:55},2:{cellWidth:35,fontSize:9},3:{fontStyle:"bold",halign:"center",fontSize:11}},alternateRowStyles:{fillColor:[248,250,255]},margin:{left:14,right:14,bottom:20}});
+  pdfSave(doc,`eGrado_AccessCodes_${(c.subject||"").replace(/\s+/g,"_")}_${(c.section||"").replace(/\s+/g,"_")}.pdf`);
+}
+
+function genClassDetailPDF(cid,c,qf="all"){
+  const{jsPDF}=window.jspdf;const doc=new jsPDF({orientation:"landscape",unit:"mm",format:"a4"});
+  const sy=c.schoolYear||aSY()||"";const section=c.section||"";const sigs=getSigs({classRef:c});
+  const cnt=qCount(cid),ks=qKeys(cid);const ro=gCS(cid);const g=(S.grades||{})[cid]||{};
+  const te=S.teachers[cT(c)]||{};
+  const showKs=qf==="all"?ks:[qf];
+  const qfLabel=qf==="all"?null:qLabel(qf,cnt);
+  let y=pdfH(doc,`${c.subject||"Subject"} — ${section}`,`Teacher: ${te.name||"—"} · ${ro.length} students · S.Y. ${sy}`,sy,{quarterLabel:qfLabel,reportTitle:"CLASS GRADE REPORT"});
+  const isMC=(c.subject||"").toLowerCase().includes("mapeh")&&!isMAPEHComp(c.subject);
+  let head,body;
+  if(isMC){
+    head=[["#","Student Name","LRN"]];
+    showKs.forEach(qk=>{MAPEH_COMPS.forEach(ct=>{head[0].push(`${MAPEH_LABELS[ct]} ${qLabel(qk,cnt)}`)});head[0].push(`MAPEH ${qLabel(qk,cnt)}`)});
+    if(qf==="all")head[0].push("MAPEH Final");
+    body=[];ro.forEach(([code,s],i)=>{const row=[i+1,s.name||"",s.lrn||""];const r=g[code]||{};const mapehQVals=[];
+      showKs.forEach(qk=>{MAPEH_COMPS.forEach(ct=>{const k=mapehCompKey(ct,qk);const v=r[k];row.push(v!=null&&v!==""?(+v).toFixed(2):"—")});const mv=calcMAPEHFromClass(cid,code,qk);row.push(mv!=null?mv.toFixed(2):"—");if(mv!=null)mapehQVals.push(mv)});
+      if(qf==="all"){const mFin=mapehQVals.length?mapehQVals.reduce((a,b)=>a+b,0)/mapehQVals.length:null;row.push(mFin!=null?mFin.toFixed(2):"—")}body.push(row)});
+  } else {
+    head=[["#","Student Name","Sex","LRN"]];showKs.forEach(q=>{head[0].push(qLabel(q,cnt))});head[0].push(qf==="all"?"Final Average":"Remarks");
+    const mode=_gradingMode();
+    const fmtG=v=>v==null?"—":(mode==='transmuted'?String(v):(+v).toFixed(2));
+    body=[];ro.forEach(([code,s],i)=>{const r=g[code]||{};const row=[i+1,s.name||"",s.sex||"",s.lrn||""];
+      const finalsArr=[];
+      showKs.forEach(q=>{const v=r[q];const init=(v==null||v===""||isNaN(+v))?null:+v;const fin=init==null?null:_finalForMode(init);finalsArr.push(fin);row.push(fmtG(fin))});
+      if(qf==="all"){const valid=finalsArr.filter(x=>x!=null);const avg=valid.length?valid.reduce((a,b)=>a+b,0)/valid.length:null;row.push(fmtG(avg==null?null:(mode==='transmuted'?Math.round(avg):avg)))}
+      else{const fin=finalsArr[0];row.push(fin!=null&&fin>=75?"Passed":fin!=null?"Failed":"—")}body.push(row)});
+  }
+  doc.autoTable({startY:y,head,body,theme:"grid",styles:{fontSize:7.5,cellPadding:2.5,lineColor:[199,210,254],lineWidth:.25,textColor:[15,23,42]},headStyles:{fillColor:[29,78,216],textColor:[255,255,255],fontStyle:"bold",fontSize:6.5,halign:"center"},columnStyles:{0:{halign:"center",cellWidth:7},1:{cellWidth:36},2:{cellWidth:24,fontSize:6.5}},alternateRowStyles:{fillColor:[248,250,255]},didParseCell:function(d){if(d.section==="body"&&d.column.index>=3){d.cell.styles.halign="center";d.cell.styles.fontStyle="bold";const v=parseFloat(d.cell.raw);if(!isNaN(v)){d.cell.styles.textColor=v>=90?[5,150,105]:v>=75?[217,119,6]:[220,38,38]}if(d.cell.raw==="Passed")d.cell.styles.textColor=[5,150,105];if(d.cell.raw==="Failed")d.cell.styles.textColor=[220,38,38]}if(d.section==="body"&&d.column.index===head[0].length-1){d.cell.styles.fillColor=[232,239,255];d.cell.styles.fontStyle="bold"}},margin:{left:14,right:14,bottom:20}});
+  pdfSave(doc,`eGrado_ClassReport_${(c.subject||"").replace(/\s+/g,"_")}_${section.replace(/\s+/g,"_")}_${qf!=="all"?qf+"_":""}SY${sy}.pdf`,sigs);
+}
+
+function genClassPDF(cid,qf="all"){genMultiPDF([cid],S.classes[cid]||{},qf)}
+function genMultiPDF(cids,refC,qf="all"){
+  const{jsPDF}=window.jspdf;const doc=new jsPDF({orientation:"landscape",unit:"mm",format:"a4"});const sy=refC.schoolYear||aSY()||"";const section=refC.section||"";const sigs=getSigs({classRef:refC});
+  const subjects=cids.map(id=>({id,data:S.classes[id]||{}})).filter(x=>x.data).sort(depedSort);
+  const allStu=new Map();subjects.forEach(({id})=>{gCS(id).forEach(([code,s])=>{const key=s.lrn||code;if(!allStu.has(key))allStu.set(key,{name:s.name||"",lrn:s.lrn||"",sex:s.sex||""})})});
+  const students=[...allStu.entries()].sort((a,b)=>{const sa=_sexRank({sex:a[1].sex}),sb=_sexRank({sex:b[1].sex});if(sa!==sb)return sa-sb;return a[1].name.localeCompare(b[1].name,undefined,{sensitivity:'base'})});
+  const isSingle=subjects.length===1;const title=isSingle?`${subjects[0].data.subject} — ${section}`:`Section Report — ${section}`;
+  const qfKeys=qf==="all"?null:[qf];
+  const qfLabel=qf==="all"?"All Quarters":(cnt=>qLabel(qf,cnt))(qCount(subjects[0]?.id));
+  let y=pdfH(doc,title,`${students.length} students · S.Y. ${sy}`,sy,{quarterLabel:qf!=="all"?qfLabel:null,reportTitle:isSingle?"SUBJECT GRADE REPORT":"SECTION GRADE REPORT"});
+  const head=[["#","Student Name","Sex","LRN"]];
+  subjects.forEach(sb=>{const cnt=qCount(sb.id),ks=qfKeys||qKeys(sb.id);
+    if(isSingle)ks.forEach(q=>head[0].push(qLabel(q,cnt)));
+    head[0].push(qf==="all"?(sb.data.subject||"?"):`${sb.data.subject||"?"} ${qfLabel}`)});
+  head[0].push("General Avg");
+  const mode=_gradingMode();
+  const fmtG=v=>v==null?"—":(mode==='transmuted'?String(v):(+v).toFixed(2));
+  const body=[];students.forEach(([key,st],i)=>{const row=[i+1,st.name,st.sex||"",st.lrn];let tS=0,tN=0;subjects.forEach(sb=>{const ks=qKeys(sb.id),cnt=qCount(sb.id);const sCodes=Object.entries(S.students).filter(([,s2])=>s2.classId===_rosterCid(sb.id)&&s2.lrn===st.lrn).map(([c2])=>c2);const sCode=sCodes[0]||"";const r=((S.grades||{})[sb.id]||{})[sCode]||{};
+    if(isSingle){const showKs=qfKeys||ks;showKs.forEach(q=>{const v=r[q];const init=(v==null||v===""||isNaN(+v))?null:+v;const fin=init==null?null:_finalForMode(init);row.push(fmtG(fin))})}
+    if(qf!=="all"){const v=r[qf];const init=(v==null||v===""||isNaN(+v))?null:+v;const fin=init==null?null:_finalForMode(init);row.push(fmtG(fin));if(fin!=null){tS+=fin;tN++}}else{const finals=ks.map(q=>{const v=r[q];const init=(v==null||v===""||isNaN(+v))?null:+v;return init==null?null:_finalForMode(init)}).filter(x=>x!=null);const avg=finals.length?finals.reduce((a,b)=>a+b,0)/finals.length:null;row.push(fmtG(avg==null?null:(mode==='transmuted'?Math.round(avg):avg)));if(avg!=null){tS+=avg;tN++}}
+  });const ga=tN>0?(tS/tN):null;row.push(fmtG(ga==null?null:(mode==='transmuted'?Math.round(ga):ga)));body.push(row)});
+  doc.autoTable({startY:y,head,body,theme:"grid",styles:{fontSize:7.5,cellPadding:2.5,lineColor:[199,210,254],lineWidth:.25,textColor:[15,23,42]},headStyles:{fillColor:[29,78,216],textColor:[255,255,255],fontStyle:"bold",fontSize:6.5,halign:"center"},columnStyles:{0:{halign:"center",cellWidth:7},1:{cellWidth:36},2:{cellWidth:10,halign:"center"},3:{cellWidth:24,fontSize:6.5}},alternateRowStyles:{fillColor:[248,250,255]},didParseCell:function(d){if(d.section==="body"&&d.column.index>=4){d.cell.styles.halign="center";d.cell.styles.fontStyle="bold";const v=parseFloat(d.cell.raw);if(!isNaN(v)){d.cell.styles.textColor=v>=90?[5,150,105]:v>=75?[217,119,6]:[220,38,38]}}if(d.section==="body"&&d.column.index===head[0].length-1){d.cell.styles.fillColor=[232,239,255];d.cell.styles.fontStyle="bold"}},margin:{left:14,right:14,bottom:20}});
+  pdfSave(doc,`eGrado_${section.replace(/\s+/g,"_")}_${isSingle?(subjects[0].data.subject||"").replace(/\s+/g,"_"):"AllSubjects"}_${qf!=="all"?qf+"_":""}SY${sy}.pdf`,sigs);
+}
+function genIndPDF(studentCode,refC,qf="all"){
+  const{jsPDF}=window.jspdf;const doc=new jsPDF({unit:"mm",format:"a4"});const s=S.students[studentCode];if(!s)return;const sy=refC.schoolYear||aSY()||"";const section=refC.section||s.section||"";const sigs=getSigs({classRef:refC});
+  const secClasses=Object.entries(S.classes).filter(([,cl])=>cl.section===section&&iSY(cl)).sort((a,b)=>depedSort({data:a[1]},{data:b[1]}));
+  const qfLabel=qf==="all"?null:qLabel(qf,qCount(secClasses[0]?.[0]));
+  let y=pdfH(doc,"Individual Grade Report",`${s.name||"Student"} · LRN: ${s.lrn||"—"} · ${section} · S.Y. ${sy}`,sy,{quarterLabel:qfLabel,reportTitle:"INDIVIDUAL GRADE REPORT"});
+  const pw=doc.internal.pageSize.getWidth();doc.setFillColor(248,250,255);doc.roundedRect(14,y-2,pw-28,18,3,3,"F");doc.setDrawColor(199,210,254);doc.roundedRect(14,y-2,pw-28,18,3,3,"S");doc.setFontSize(10);doc.setFont("helvetica","bold");doc.setTextColor(15,23,42);doc.text(s.name||"Student",20,y+5);doc.setFont("helvetica","normal");doc.setFontSize(8);doc.setTextColor(100,116,139);doc.text(`LRN: ${s.lrn||"—"}`,20,y+11);doc.text(`Section: ${section}`,80,y+11);doc.text(`Grade: ${gL(s.grade||s.gradeLevel||"—")}`,130,y+11);y+=24;
+  const head=[["Subject","Teacher"]];
+  if(qf==="all"){const maxQ=Math.max(...secClasses.map(([id])=>qCount(id)),4);for(let i=1;i<=maxQ;i++){const cnt=qCount(secClasses[0]?.[0]);head[0].push(qLabel("q"+i,cnt))}head[0].push("Final")}else{head[0].push(qfLabel||qf.toUpperCase());head[0].push("Remarks")}
+  const body=[];let tS=0,tN=0;const mode=_gradingMode();const fmtG=v=>v==null?"—":(mode==='transmuted'?String(v):(+v).toFixed(2));
+  secClasses.forEach(([scid,sc])=>{const cnt=qCount(scid),ks=qKeys(scid);const sCodes=Object.entries(S.students).filter(([,s2])=>s2.classId===_rosterCid(scid)&&s2.lrn===s.lrn).map(([c2])=>c2);const sCode=sCodes[0]||"";const r=((S.grades||{})[scid]||{})[sCode]||{};
+    const row=[sc.subject||"—",(S.teachers[cT(sc)]||{}).name||"—"];
+    if(qf==="all"){const maxQ=Math.max(...secClasses.map(([id])=>qCount(id)),4);const finals=[];for(let i=1;i<=maxQ;i++){const qk="q"+i;if(i<=cnt){const v=r[qk];const init=(v==null||v===""||isNaN(+v))?null:+v;const fin=init==null?null:_finalForMode(init);if(fin!=null)finals.push(fin);row.push(fmtG(fin))}else row.push("")}const avg=finals.length?finals.reduce((a,b)=>a+b,0)/finals.length:null;row.push(fmtG(avg==null?null:(mode==='transmuted'?Math.round(avg):avg)));if(avg!=null){tS+=avg;tN++}}
+    else{const v=r[qf];const init=(v==null||v===""||isNaN(+v))?null:+v;const fin=init==null?null:_finalForMode(init);row.push(fmtG(fin));row.push(fin!=null&&fin>=75?"Passed":fin!=null?"Failed":"—");if(fin!=null){tS+=fin;tN++}}
+    body.push(row)});
+  doc.autoTable({startY:y,head,body,theme:"grid",styles:{fontSize:9,cellPadding:3.5,lineColor:[199,210,254],lineWidth:.25,textColor:[15,23,42]},headStyles:{fillColor:[29,78,216],textColor:[255,255,255],fontStyle:"bold",fontSize:8,halign:"center"},columnStyles:{0:{fontStyle:"bold",cellWidth:38},1:{cellWidth:34,fontSize:8,textColor:[100,116,139]}},alternateRowStyles:{fillColor:[248,250,255]},didParseCell:function(d){if(d.section==="body"&&d.column.index>=2){d.cell.styles.halign="center";d.cell.styles.fontStyle="bold";const v=parseFloat(d.cell.raw);if(!isNaN(v)){d.cell.styles.textColor=v>=90?[5,150,105]:v>=75?[217,119,6]:[220,38,38]}if(d.cell.raw==="Passed")d.cell.styles.textColor=[5,150,105];if(d.cell.raw==="Failed")d.cell.styles.textColor=[220,38,38]}},margin:{left:14,right:14,bottom:20}});
+  let fy=doc.lastAutoTable.finalY+4;doc.setFillColor(29,78,216);doc.roundedRect(pw-80,fy,66,14,3,3,"F");doc.setFontSize(9);doc.setFont("helvetica","bold");doc.setTextColor(255,255,255);doc.text(qf==="all"?"General Average:":"Period Average:",pw-76,fy+6);doc.setFontSize(12);const ga=tN>0?(tS/tN):null;doc.text(fmtG(ga==null?null:(mode==='transmuted'?Math.round(ga):ga)),pw-76,fy+12);
+  pdfSave(doc,`eGrado_${(s.name||"Student").replace(/\s+/g,"_")}_${qf!=="all"?qf+"_":""}Grades.pdf`,sigs);
+}
+
+function pgTeShared(pg){
+  pg.appendChild(pH("Shared with Me",`Adviser <em>view</em>`,"Classes shared to you by subject teachers. View-only access."));
+  const myShared=(S.shared||{})[S.user.uid]||{};const entries=Object.entries(myShared);
+  if(!entries.length){pg.appendChild(empS("Nothing shared yet","Subject teachers can share their grade books with you."));return}
+  pg.appendChild(el("div",{class:"sh reveal"},[el("h2",{html:`Shared <em>classes</em>`}),el("div",{class:"sh-a"},[mkB("Download all (PDF)","am sm",()=>dlAdviserPDF(entries))])]));
+  entries.forEach(([cid,info])=>{const c=S.classes[cid]||{};const te=S.teachers[info.sharedBy]||{};const ro=gCS(cid);const g=(S.grades||{})[cid]||{};const cnt=qCount(cid),ks=qKeys(cid);
+    const card=el("div",{class:"share-card reveal"});card.innerHTML=`<div class="sc-top"><div><div class="sc-name">${esc(c.subject||info.subject||"Subject")} · ${esc(c.section||info.section||"Section")}</div><div class="sc-meta">Shared by ${esc(te.name||info.sharedByName||"—")} · ${ro.length} students · ${cnt} ${cnt===2?"sem":cnt===3?"tri":"qtr"}${cnt>1?"s":""}</div></div><div style="display:flex;gap:4px"><button class="btn sm" data-dl="${cid}"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>PDF</button></div></div>`;
+    if(ro.length){const w=el("div",{class:"tw",style:"margin-top:10px"}),t=el("table");t.innerHTML=`<thead><tr><th>Student</th>${ks.map(q=>`<th>${qLabel(q,cnt)}</th>`).join("")}<th>Final</th></tr></thead>`;const tb=el("tbody");ro.forEach(([code,s])=>{const r=g[code]||{},tr=el("tr");tr.innerHTML=`<td class="sn">${esc(s.name)}<span class="sm">LRN ${esc(s.lrn||"—")}</span></td>${ks.map(q=>`<td class="mono">${r[q]!=null?(+r[q]).toFixed(2):"—"}</td>`).join("")}<td>${rF(r,ks)}</td>`;tb.appendChild(tr)});t.appendChild(tb);w.appendChild(t);card.appendChild(w)}
+    card.querySelector("[data-dl]").addEventListener("click",()=>genClassPDF(cid));
+    pg.appendChild(card);
+  });
+}
+
+function dlAdviserPDF(entries){
+  const cids=entries.map(([cid])=>cid).filter(cid=>S.classes[cid]);
+  if(!cids.length){toast("No classes to export.","err");return}
+  const refC=S.classes[cids[0]]||{};genMultiPDF(cids,refC);
+}
+
+function _computeChildLive(childCid,code,qNum){
+  const wts=_weights(childCid);if(!wts.quiz&&wts.quiz!==0)return null;if(wts.quiz==null||wts.pt==null||wts.exam==null)return null;
+  const row=((S.grades||{})[childCid]||{})[code]||{};
+  const compData=row[`q${qNum}_comp`]||{};
+  const tkQ=_pullTkQuizzes(childCid,code,qNum).filter(x=>x.hasScore);
+  const tkP=_pullTkPTs(childCid,code,qNum).filter(x=>x.hasScore);
+  const fin=_compFinal({quizzes:tkQ,pts:tkP,exam:compData.exam,remedial:compData.remedial},wts);
+  return fin!=null?+fin.toFixed(2):null;
+}
+function _liveRow(cid,code){
+  const c=(S.classes||{})[cid]||{};
+  const stored={...(((S.grades||{})[cid]||{})[code]||{})};
+  if(c.mapehParentId||isMAPEHClass(c.subject)&&!c.mapehChildren){return stored}
+  const ks=qKeys(cid);
+  if(isMAPEHClass(c.subject)&&c.mapehChildren){
+    const children=c.mapehChildren||{};
+    const cids=MAPEH_COMPS.map(k=>children[k]).filter(Boolean);
+    if(cids.length===4){
+      ks.forEach(qk=>{
+        const qN=+qk.slice(1);
+        const vs=cids.map(ccid=>_computeChildLive(ccid,code,qN)).filter(v=>v!=null);
+        if(vs.length===4)stored[qk]=+(vs.reduce((a,b)=>a+b,0)/4).toFixed(2);
+      });
+    }
+    return stored;
+  }
+  if(!_hasWeights(cid))return stored;
+  const w=_weights(cid);
+  ks.forEach(qk=>{
+    const qN=+qk.slice(1);
+    const compData=stored[qk+"_comp"]||{};
+    const tkQ=_pullTkQuizzes(cid,code,qN).filter(x=>x.hasScore);
+    const tkP=_pullTkPTs(cid,code,qN).filter(x=>x.hasScore);
+    const fin=_compFinal({quizzes:tkQ,pts:tkP,exam:compData.exam,remedial:compData.remedial},w);
+    if(fin!=null)stored[qk]=+fin.toFixed(2);
+  });
+  return stored;
+}
+
+function pgStGr(pg){
+  pg.appendChild(pH("My Grades",`Hello, <em>${esc(fN(S.user.name))}</em>.`,"Your quarterly scores."));
+  const id=el("div",{class:"card reveal",style:"padding:18px 20px;display:flex;gap:14px;align-items:center;margin-bottom:20px;flex-wrap:wrap"});
+  id.innerHTML=`<div style="width:52px;height:52px;border-radius:12px;background:linear-gradient(135deg,var(--bl),var(--bd));display:grid;place-items:center;color:#fff;font-size:22px;font-weight:700">${esc((S.user.name||"?").split(/\s+/).map(x=>x[0]).slice(0,2).join("").toUpperCase())}</div><div style="flex:1;min-width:160px"><div style="font-weight:700;font-size:22px;color:var(--tx)">${esc(S.user.name)}</div><div style="color:var(--txs);font-size:12px;margin-top:1px">LRN <span class="mono" style="color:var(--tx)">${esc(S.user.lrn||"—")}</span>${S.user.section?` · <b>${esc(S.user.section)}</b>`:""}${S.user.grade?` · Grade ${esc(gL(S.user.grade))}`:""}</div></div><span class="chip am">Student</span>`;pg.appendChild(id);
+
+  const disc=el("div",{class:"disc reveal"});disc.innerHTML=`<div class="disc-hd"><div class="disc-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div><div class="disc-ti">Important Notice</div></div><div class="disc-bd"><strong>The information displayed in this system is provided for reference purposes only and does not constitute an official academic record.</strong> Students and parents/guardians are advised to rely exclusively on the <strong>official Report Card (SF 9)</strong> distributed each quarter by the class adviser as the sole authoritative document for final and verified grades.</div><div class="disc-ft"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Cogon National High School · Office of the Registrar · DepEd Region XI</div>`;pg.appendChild(disc);
+
+  const cids=[...new Set(S.user.classIds||[])];const me=cids.map(cid=>{const c=S.classes[cid];if(!c)return null;const cf=S.user.codes.find(code=>S.students[code]?.classId===cid);return{cid,c,code:cf||S.user.primaryCode}}).filter(Boolean);
+  if(!me.length){pg.appendChild(empS("No subjects","Check with adviser."));return}
+
+  let sum=0,n=0;me.forEach(({cid,c,code})=>{if(c.mapehParentId)return;const r=_liveRow(cid,code);const ks2=qKeys(cid);const finalsByQ={};ks2.forEach(q=>{const init=r[q];const v=(init==null||init===""||isNaN(+init))?null:+init;finalsByQ[q]=v==null?null:_finalForMode(v)});const valid=Object.values(finalsByQ).filter(x=>x!=null);if(valid.length){const avg=valid.reduce((a,b)=>a+b,0)/valid.length;sum+=avg;n++}});
+  const gaCount=me.filter(({c})=>!c.mapehParentId).length;
+  const st=el("div",{class:"sg reveal"});st.append(sC("General Average",n?(sum/n).toFixed(2):"—",n?`${n} subject${n===1?"":"s"}`:"pending"),sC("Subjects",gaCount,"enrolled","am"));pg.appendChild(st);
+
+  const mapehEnroll=me.find(({c})=>isMAPEHClass(c.subject));
+  if(mapehEnroll){
+    const mapehCard=el("div",{class:"g-card reveal",style:"margin-bottom:14px;border-left:4px solid var(--am)"});
+    const mCid=mapehEnroll.cid,mCode=mapehEnroll.code;const mKs=qKeys(mCid);const mCnt=qCount(mCid);
+    const mPC=mapehEnroll.c;const mR=_liveRow(mCid,mCode);
+    const mode=_gradingMode();
+    const mFinalsByQ={};mKs.forEach(qk=>{const init=mR[qk];const v=(init==null||init===""||isNaN(+init))?null:+init;mFinalsByQ[qk]=v==null?null:_finalForMode(v)});
+    const mValid=Object.values(mFinalsByQ).filter(x=>x!=null);
+    const mFin=mValid.length?(mValid.reduce((a,b)=>a+b,0)/mValid.length):null;
+    const mFinDisp=mFin==null?null:(mode==='transmuted'?Math.round(mFin):+mFin.toFixed(2));
+    const children=mPC.mapehChildren||{};
+    let html=`<div class="g-top"><div><div class="g-name">${esc(mPC.subject||"MAPEH")}</div><div style="color:var(--txs);font-size:11px;margin-top:1px">Auto-calculated average of 4 components</div></div><div class="g-final ${mFin==null?"":mFin>=90?"":mFin>=75?"mid":"low"}">${mFinDisp==null?"—":mFinDisp}</div></div>${_honors(mFin)?`<div style="margin-top:-4px;margin-bottom:6px;text-align:right">${_honorsBadge(mFin)}</div>`:""}`;
+    MAPEH_COMPS.forEach(ct=>{
+      const ccid=children[ct];
+      const cRow=ccid?_liveRow(ccid,mCode):{};
+      const compFinalsByQ=mKs.map(qk=>{const init=cRow[qk];const v=(init==null||init===""||isNaN(+init))?null:+init;return v==null?null:_finalForMode(v)});
+      const cf=compFinalsByQ.filter(x=>x!=null);
+      const compAve=cf.length?cf.reduce((a,b)=>a+b,0)/cf.length:null;
+      const compAveDisp=compAve==null?null:(mode==='transmuted'?Math.round(compAve):+compAve.toFixed(2));
+      html+=`<div class="mc-row">`;
+      html+=`<div class="mc-label">${MAPEH_LABELS[ct]}${compAve!=null&&_honors(compAve)?" "+_honorsBadge(compAve,"mini"):""}</div>`;
+      html+=`<div class="mc-grades">`;
+      mKs.forEach((qk,idx)=>{const v=compFinalsByQ[idx];const dv=v==null?null:(mode==='transmuted'?v:v.toFixed(2));html+=`<div class="mc-qv ${v==null?"e":""}"><span class="ql">${qLabel(qk,mCnt)}:</span>${dv!=null?dv:"—"}</div>`});
+      html+=`</div>`;
+      html+=`<div class="mc-ave">Ave: ${compAveDisp!=null?compAveDisp:"—"}</div>`;
+      html+=`</div>`;
+    });
+    html+=`<div class="g-qs" style="grid-template-columns:repeat(${mCnt},1fr);margin-top:10px">`;
+    mKs.forEach(qk=>{const v=mFinalsByQ[qk];const hasQ=v!=null;const qH=hasQ?_honorsBadge(v,"mini"):"";const dv=hasQ?(mode==='transmuted'?v:v.toFixed(2)):"—";html+=`<div class="gq"><div class="lb">MAPEH ${qLabel(qk,mCnt)}${qH?" "+qH:""}</div><div class="v ${!hasQ?"e":""}">${dv}</div></div>`});
+    html+=`</div><div class="g-foot"><span>MAPEH Final</span><span class="mono" style="font-weight:700;color:var(--am)">${mFinDisp!=null?mFinDisp:"pending"}</span></div>`;
+    mapehCard.innerHTML=html;pg.appendChild(mapehCard);
+  }
+
+  pg.appendChild(el("div",{class:"sh reveal"},[el("h2",{html:`Subject <em>grades</em>`})]));
+  const visibleMe=me.filter(({c})=>!c.mapehParentId&&!isMAPEHClass(c.subject));
+  const cards=el("div",{class:"gc"});visibleMe.forEach(({cid,c,code},i)=>{const r=_liveRow(cid,code);const ks=qKeys(cid);const cnt=qCount(cid);
+    const finalsByQ={};ks.forEach(q=>{const init=r[q];const v=(init==null||init===""||isNaN(+init))?null:+init;finalsByQ[q]=v==null?null:_finalForMode(v)});
+    const finValid=Object.values(finalsByQ).filter(x=>x!=null);
+    const fin=finValid.length?(finValid.reduce((a,b)=>a+b,0)/finValid.length):null;
+    const finDisp=fin==null?null:(_gradingMode()==='transmuted'?Math.round(fin):+fin.toFixed(2));
+    const te=S.teachers[cT(c)]||{};const kl=fin==null?"":fin>=90?"":fin>=75?"mid":"low";const fbs=r.feedback||{};const hfb=Object.values(fbs).some(Boolean);
+    const wrap=el("div",{class:"flip-wrap reveal",style:`animation-delay:${i*40}ms`});
+    const inner=el("div",{class:"flip-inner"});
+    const front=el("div",{class:`g-card flip-front ${hfb?"has-fb":""}`});
+    front.innerHTML=`<div class="g-top"><div><div class="g-name">${esc(c.subject||"Subject")}</div><div style="color:var(--txs);font-size:11px;margin-top:1px">${esc(c.section||"—")} · ${esc(te.name||"—")}</div></div><div class="g-final ${kl}">${finDisp==null?"—":finDisp}</div></div>${_honors(fin)?`<div style="margin-top:-4px;margin-bottom:6px;text-align:right">${_honorsBadge(fin)}</div>`:""}<div class="g-qs" style="grid-template-columns:repeat(${cnt},1fr)">${ks.map((q,idx)=>{const qf=finalsByQ[q];const hasQ=qf!=null;const qH=hasQ?_honorsBadge(qf,"mini"):"";const qDisp=hasQ?(_gradingMode()==='transmuted'?qf:qf.toFixed(2)):"—";return `<div class="gq"><div class="lb">${qLabel(q,cnt)}${qH?" "+qH:""}</div><div class="v ${!hasQ?"e":""}">${qDisp}</div></div>`}).join("")}</div><div class="g-foot"><span>Final</span><span class="mono">${finDisp==null?"pending":finDisp}</span></div>${hfb?`<div style="margin-top:8px;font-size:10px;color:var(--bl);font-weight:600;text-align:center">Tap to view feedback</div>`:""}`;
+    inner.appendChild(front);
+    if(hfb){
+      const back=el("div",{class:"flip-back"});
+      back.innerHTML=`<div class="fb-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Feedback · ${esc(c.subject)}</div><div class="fb-list" style="flex:1;overflow-y:auto">${ks.map(q=>{const tx=fbs[q];return tx?`<div class="fb-e"><span class="fq">${qLabel(q,cnt)}</span>${esc(tx)}</div>`:""}).join("")}</div><div style="margin-top:8px;font-size:10px;color:var(--bl);font-weight:600;text-align:center">Tap to flip back</div>`;
+      inner.appendChild(back);
+      let isFlipped=false;
+      wrap.addEventListener("click",()=>{
+        if(!isFlipped){inner.classList.add("flipped");isFlipped=true;inner.addEventListener("animationend",()=>{inner.classList.remove("flipped");inner.style.transform="rotateY(180deg)";front.classList.add("showing-back")},{once:true})}
+        else{inner.style.transition="transform .5s var(--ease)";inner.style.transform="rotateY(0deg)";front.classList.remove("showing-back");isFlipped=false;setTimeout(()=>{inner.style.transition=""},550)}
+      });
+    }
+    wrap.appendChild(inner);cards.appendChild(wrap)});pg.appendChild(cards);
+
+}
+
+window.addEventListener("load",()=>{setTimeout(()=>{$("#splash").classList.add("gone");if(!S.user)$("#view-login").classList.remove("hidden")},600)});
+document.addEventListener("click",e=>{const b=e.target.closest(".btn");if(!b)return;const r=b.getBoundingClientRect();b.style.setProperty("--rx",((e.clientX-r.left)/r.width*100)+"%");b.style.setProperty("--ry",((e.clientY-r.top)/r.height*100)+"%")});
+onAuthStateChanged(srcAuth,async user=>{if(!user||S.user)return;try{if(user.uid===ADMIN_UID){let n=user.email?.split("@")[0]||"Admin";const s=await get(ref(srcDb,`teachers/${user.uid}`));if(s.exists())n=s.val().name||n;S.user={role:"admin",uid:user.uid,email:user.email,name:n};await bootApp()}else{const s=await get(ref(srcDb,`teachers/${user.uid}`));if(s.exists()){const t=s.val();S.user={role:"teacher",uid:user.uid,email:user.email,name:t.name||t.fullName||user.email.split("@")[0],...t};await bootApp()}}}catch(e){}});
+</script>
+</body>
+</html>
