@@ -1,4 +1,4 @@
-const CACHE_VERSION='cnhs-hub-v8';
+const CACHE_VERSION='gap-v9-offline';
 const CORE_CACHE=CACHE_VERSION+'-core';
 const RUNTIME_CACHE=CACHE_VERSION+'-runtime';
 const FIREBASE_CACHE=CACHE_VERSION+'-firebase';
