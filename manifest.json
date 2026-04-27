@@ -1,0 +1,44 @@
+{
+  "name": "The GAP",
+  "short_name": "The GAP",
+  "description": "Unified academic hub - PerformanceTask Portal, eGrado Portal, and Attendance Portal. -Joram",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "display_override": ["window-controls-overlay", "standalone", "minimal-ui"],
+  "orientation": "any",
+  "background_color": "#030a24",
+  "theme_color": "#1e3a8a",
+  "lang": "en-PH",
+  "dir": "ltr",
+  "categories": ["education", "productivity"],
+  "prefer_related_applications": false,
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icon-maskable.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "shortcuts": [
+    {
+      "name": "PerformanceTask Portal",
+      "short_name": "PerformanceTask Portal",
+      "description": "Performance tasks and rubrics",
+      "url": "./taskhub.html",
+      "icons": [{ "src": "icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "eGrado Portal",
+      "short_name": "eGrado",
+      "description": "Quarterly grade management",
+      "url": "./egrado.html",
+      "icons": [{ "src": "icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Attendance Portal",
+      "short_name": "Attendance Portal",
+      "description": "Daily attendance monitoring",
+      "url": "./attendtrack.html",
+      "icons": [{ "src": "icon-192.png", "sizes": "192x192" }]
+    }
+  ]
+}
