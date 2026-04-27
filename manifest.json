@@ -1,7 +1,7 @@
 {
   "name": "The GAP",
   "short_name": "The GAP",
-  "description": "Unified academic hub - PerformanceTask Portal, eGrado Portal, and Attendance Portal. -Joram",
+  "description": "Unified academic workspace: PerformanceTask Portal, eGrado Portal, and Attendance Portal. -Joram",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
